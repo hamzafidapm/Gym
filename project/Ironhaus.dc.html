@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>IRONHAUS — Strength &amp; Conditioning Studio | Book Gym Classes in Austin</title>
+<meta name="description" content="IRONHAUS is a strength, HIIT, boxing and yoga studio in East Austin. Book classes, meet certified trainers, and start a free 7-day trial today.">
+<meta name="design_doc_mode" content="page">
+<meta property="og:title" content="IRONHAUS — Strength &amp; Conditioning Studio in Austin">
+<meta property="og:description" content="Book strength, HIIT, boxing and yoga classes with certified coaches. Free 7-day trial.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ironhaus.fit/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="IRONHAUS — Train Heavier. Recover Smarter.">
+<meta name="twitter:description" content="East Austin strength studio. 40+ weekly classes. Free 7-day trial.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HealthClub","name":"IRONHAUS","description":"Strength and conditioning studio offering weight training, HIIT, boxing, yoga and personal training.","url":"https://ironhaus.fit/","telephone":"+1-512-555-0148","address":{"@type":"PostalAddress","streetAddress":"1408 E 6th St","addressLocality":"Austin","addressRegion":"TX","postalCode":"78702","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":30.2655,"longitude":-97.7278},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"05:30","closes":"22:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"07:00","closes":"19:00"}],"priceRange":"$$","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"412"}}</script>
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#0A0B09;color:#F2F3EF;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+a{color:#C8FF2E;text-decoration:none}
+a:hover{color:#E6FF8F}
+button{font-family:inherit}
+::selection{background:#C8FF2E;color:#0A0B09}
+@keyframes ih-rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes ih-fade{from{opacity:0}to{opacity:1}}
+@keyframes ih-slidein{from{transform:translateX(100%)}to{transform:none}}
+@keyframes ih-pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
+@keyframes ih-ring{0%{transform:scale(.8);opacity:.7}100%{transform:scale(2.2);opacity:0}}
+@keyframes ih-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes ih-pulse{0%,100%{opacity:.35}50%{opacity:.85}}
+@keyframes ih-shimmer{from{background-position:-400px 0}to{background-position:400px 0}}
+</style>
+</helmet>
+
+<div style="position:fixed;top:0;left:0;height:3px;background:#C8FF2E;z-index:120;width:{{ scrollPct }}%;box-shadow:0 0 14px rgba(200,255,46,.7)"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(14px);transition:background .35s,border-color .35s,padding .35s;border-bottom:1px solid {{ navBorder }};background:{{ navBg }};padding:{{ navPad }} clamp(16px,4vw,56px)">
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:24px;max-width:1440px;margin:0 auto">
+    <button onClick="{{ goHome }}" style="display:flex;align-items:center;gap:10px;background:none;border:0;cursor:pointer;padding:0">
+      <span style="width:26px;height:26px;background:#C8FF2E;display:block;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>
+      <span style="font-family:'Archivo Black',sans-serif;font-size:21px;letter-spacing:-.02em;color:#F2F3EF">IRONHAUS</span>
+    </button>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;align-items:center;gap:6px">
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+          <button onClick="{{ n.go }}" style="background:none;border:0;cursor:pointer;padding:10px 14px;font-size:13.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:{{ n.color }};transition:color .2s" style-hover="color:#C8FF2E">{{ n.label }}</button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="display:flex;align-items:center;gap:10px">
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <button onClick="{{ goDash }}" style="background:none;border:1px solid rgba(255,255,255,.18);color:#F2F3EF;cursor:pointer;padding:11px 18px;border-radius:2px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;transition:.2s" style-hover="border-color:#C8FF2E;color:#C8FF2E">My Account</button>
+      </sc-if>
+      <button onClick="{{ goJoin }}" style="background:#C8FF2E;color:#0A0B09;border:0;cursor:pointer;padding:12px 20px;border-radius:2px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .2s" style-hover="transform:scale(1.04);box-shadow:0 0 24px rgba(200,255,46,.4)" style-active="transform:scale(.97)">Start Free Trial</button>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleNav }}" aria-label="Open menu" style="width:46px;height:46px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;background:none;border:1px solid rgba(255,255,255,.18);border-radius:2px;cursor:pointer">
+          <span style="width:18px;height:2px;background:#F2F3EF;display:block"></span>
+          <span style="width:18px;height:2px;background:#F2F3EF;display:block"></span>
+        </button>
+      </sc-if>
+    </div>
+  </nav>
+</header>
+
+<sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:110;background:rgba(10,11,9,.75);animation:ih-fade .2s ease" onClick="{{ toggleNav }}">
+    <aside style="position:absolute;top:0;right:0;bottom:0;width:min(340px,86vw);background:#101208;border-left:1px solid rgba(200,255,46,.22);padding:22px;display:flex;flex-direction:column;gap:6px;animation:ih-slidein .32s cubic-bezier(.2,.8,.2,1)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <span style="font-family:'Archivo Black',sans-serif;font-size:18px">MENU</span>
+        <button onClick="{{ toggleNav }}" aria-label="Close menu" style="width:44px;height:44px;background:none;border:1px solid rgba(255,255,255,.18);color:#F2F3EF;font-size:20px;cursor:pointer;border-radius:2px">×</button>
+      </div>
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+        <button onClick="{{ n.go }}" style="text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.07);color:{{ n.color }};padding:16px 4px;font-family:'Archivo Black',sans-serif;font-size:20px;cursor:pointer">{{ n.label }}</button>
+      </sc-for>
+      <button onClick="{{ goDash }}" style="text-align:left;background:none;border:0;border-bottom:1px solid rgba(255,255,255,.07);color:#F2F3EF;padding:16px 4px;font-family:'Archivo Black',sans-serif;font-size:20px;cursor:pointer">MY ACCOUNT</button>
+      <button onClick="{{ goJoin }}" style="margin-top:18px;background:#C8FF2E;color:#0A0B09;border:0;padding:16px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Start Free Trial</button>
+    </aside>
+  </div>
+</sc-if>
+
+<main style="padding-top:78px;min-height:100vh">
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section style="position:relative;overflow:hidden;min-height:min(92vh,860px);display:flex;align-items:flex-end;padding:clamp(28px,6vw,80px) clamp(16px,4vw,56px) 0">
+    <img src="img/strength.png" alt="Athlete locking out a heavy barbell deadlift on the IRONHAUS training floor" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%"></img>
+    <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(120% 90% at 75% 15%,rgba(200,255,46,.14),transparent 60%),radial-gradient(80% 70% at 10% 90%,rgba(255,90,31,.1),transparent 60%)"></div>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,#0A0B09 6%,rgba(10,11,9,.55) 45%,rgba(10,11,9,.2))"></div>
+    <div style="position:relative;max-width:1440px;margin:0 auto;width:100%;padding-bottom:clamp(36px,6vw,72px)">
+      <p style="animation:ih-rise .7s .05s both;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;color:#C8FF2E;margin:0 0 20px">EAST AUSTIN · EST. 2016 · OPEN 05:30</p>
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(46px,10.5vw,148px);line-height:.86;letter-spacing:-.035em;text-wrap:balance">
+        <span style="display:block;animation:ih-rise .8s .1s both">TRAIN</span>
+        <span style="display:block;animation:ih-rise .8s .22s both;color:#C8FF2E">HEAVIER.</span>
+        <span style="display:block;animation:ih-rise .8s .34s both">RECOVER SMARTER.</span>
+      </h1>
+      <p style="animation:ih-rise .8s .46s both;max-width:520px;margin:26px 0 0;font-size:clamp(15px,2vw,18px);line-height:1.6;color:#9A9E93;text-wrap:pretty">A coach-led strength studio for people who want a number to chase. 40+ classes a week, capped at 14 athletes, programmed in 8-week blocks.</p>
+      <div style="animation:ih-rise .8s .58s both;display:flex;flex-wrap:wrap;gap:12px;margin-top:34px">
+        <button onClick="{{ goClasses }}" style="background:#C8FF2E;color:#0A0B09;border:0;padding:19px 34px;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .15s,box-shadow .25s" style-hover="transform:translateY(-2px) scale(1.02);box-shadow:0 12px 34px rgba(200,255,46,.32)" style-active="transform:scale(.97)">Book a Class</button>
+        <button onClick="{{ goJoin }}" style="background:rgba(242,243,239,.06);color:#F2F3EF;border:1px solid rgba(242,243,239,.25);padding:19px 34px;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s" style-hover="border-color:#C8FF2E;color:#C8FF2E;transform:translateY(-2px)" style-active="transform:scale(.97)">Start Free Trial</button>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="overflow:hidden;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09);background:#C8FF2E;padding:11px 0">
+    <div style="display:flex;width:200%;animation:ih-marquee 26s linear infinite;white-space:nowrap;font-family:'Archivo Black',sans-serif;font-size:14px;letter-spacing:.12em;color:#0A0B09">
+      <span style="padding-right:28px">STRENGTH · HIIT · BOXING · YOGA · CYCLE · MOBILITY · PERSONAL TRAINING · STRENGTH · HIIT · BOXING · YOGA · CYCLE · MOBILITY · PERSONAL TRAINING ·&nbsp;</span>
+      <span style="padding-right:28px">STRENGTH · HIIT · BOXING · YOGA · CYCLE · MOBILITY · PERSONAL TRAINING · STRENGTH · HIIT · BOXING · YOGA · CYCLE · MOBILITY · PERSONAL TRAINING ·&nbsp;</span>
+    </div>
+  </div>
+
+  <section style="padding:clamp(64px,9vw,120px) clamp(16px,4vw,56px);max-width:1440px;margin:0 auto">
+    <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:44px">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">01 / DISCIPLINES</p>
+        <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(32px,5.5vw,66px);line-height:.92;letter-spacing:-.03em">PICK YOUR<br>FIGHT.</h2>
+      </div>
+      <button onClick="{{ goClasses }}" style="background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;padding:15px 24px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s" style-hover="border-color:#C8FF2E;color:#C8FF2E">View full schedule →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px">
+      <sc-for list="{{ categories }}" as="c" hint-placeholder-count="6">
+        <button data-reveal onClick="{{ c.go }}" style="text-align:left;position:relative;overflow:hidden;background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;padding:26px 24px 24px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s" style-hover="transform:translateY(-6px);border-color:#C8FF2E">
+          <img src="{{ c.img }}" alt="{{ c.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.42;transition:transform .5s cubic-bezier(.2,.8,.2,1),opacity .4s"></img>
+          <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(to top,#0B0D08 12%,rgba(11,13,8,.72) 55%,rgba(11,13,8,.45))"></div>
+          <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-start">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#C8FF2E">{{ c.num }}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#6E7268;border:1px solid rgba(255,255,255,.14);padding:5px 8px">{{ c.count }} / WK</span>
+          </div>
+          <div style="position:relative">
+            <h3 style="margin:0 0 8px;font-family:'Archivo Black',sans-serif;font-size:28px;letter-spacing:-.02em;color:#F2F3EF">{{ c.name }}</h3>
+            <p style="margin:0;font-size:13.5px;line-height:1.55;color:#9A9E93">{{ c.blurb }}</p>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.09);background:#0D0F0B;padding:clamp(56px,8vw,96px) clamp(16px,4vw,56px)">
+    <div ref="{{ statsRef }}" style="max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px 24px">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div>
+          <div style="font-family:'Archivo Black',sans-serif;font-size:clamp(42px,6vw,76px);line-height:1;letter-spacing:-.04em;color:#C8FF2E">{{ s.value }}</div>
+          <div style="margin-top:10px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#F2F3EF">{{ s.label }}</div>
+          <div style="margin-top:5px;font-size:13px;line-height:1.5;color:#7E8278">{{ s.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:clamp(64px,9vw,120px) clamp(16px,4vw,56px);max-width:1440px;margin:0 auto">
+    <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:36px">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">02 / THE COACHES</p>
+        <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(32px,5.5vw,66px);line-height:.92;letter-spacing:-.03em">WHO'S IN<br>YOUR CORNER.</h2>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onClick="{{ trainerPrev }}" aria-label="Previous trainers" style="width:52px;height:52px;background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;font-size:18px;cursor:pointer;border-radius:2px;transition:.2s" style-hover="border-color:#C8FF2E;color:#C8FF2E">←</button>
+        <button onClick="{{ trainerNext }}" aria-label="Next trainers" style="width:52px;height:52px;background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;font-size:18px;cursor:pointer;border-radius:2px;transition:.2s" style-hover="border-color:#C8FF2E;color:#C8FF2E">→</button>
+      </div>
+    </div>
+    <div ref="{{ trainerRail }}" style="display:flex;gap:14px;overflow-x:auto;scroll-behavior:smooth;padding-bottom:8px;scrollbar-width:thin">
+      <sc-for list="{{ trainers }}" as="t" hint-placeholder-count="4">
+        <button onClick="{{ t.open }}" style="flex:0 0 clamp(240px,30vw,318px);text-align:left;background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;overflow:hidden;cursor:pointer;padding:0;transition:border-color .3s,transform .3s" style-hover="border-color:#C8FF2E;transform:translateY(-5px)">
+          <img src="{{ t.img }}" alt="{{ t.alt }}" loading="lazy" style="display:block;width:100%;height:288px;object-fit:cover;object-position:center 30%"></img>
+          <div style="padding:20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:#C8FF2E">{{ t.specialty }}</div>
+            <h3 style="margin:9px 0 6px;font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.02em;color:#F2F3EF">{{ t.name }}</h3>
+            <p style="margin:0;font-size:13px;line-height:1.5;color:#9A9E93">{{ t.certs }}</p>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="padding:0 clamp(16px,4vw,56px) clamp(64px,9vw,120px);max-width:1440px;margin:0 auto">
+    <div data-reveal style="text-align:center;margin-bottom:38px">
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">03 / MEMBERSHIP</p>
+      <h2 style="margin:0 0 22px;font-family:'Archivo Black',sans-serif;font-size:clamp(32px,5.5vw,66px);line-height:.92;letter-spacing:-.03em">NO CONTRACTS. NO EXCUSES.</h2>
+      <div style="display:inline-flex;background:#121410;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:4px">
+        <button onClick="{{ setMonthly }}" style="padding:12px 22px;border:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:.25s;background:{{ monthlyBg }};color:{{ monthlyFg }}">Monthly</button>
+        <button onClick="{{ setAnnual }}" style="padding:12px 22px;border:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:.25s;background:{{ annualBg }};color:{{ annualFg }}">Annual · save 17%</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;align-items:start">
+      <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+        <div data-reveal style="position:relative;background:{{ p.bg }};border:1px solid {{ p.border }};border-radius:3px;padding:30px 26px;transition:transform .3s,border-color .3s" style-hover="transform:translateY(-6px)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:{{ p.tagColor }}">{{ p.tag }}</div>
+          <h3 style="margin:12px 0 4px;font-family:'Archivo Black',sans-serif;font-size:30px;letter-spacing:-.02em;color:{{ p.fg }}">{{ p.name }}</h3>
+          <div style="display:flex;align-items:baseline;gap:6px;margin:16px 0 4px">
+            <span style="font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1;letter-spacing:-.04em;color:{{ p.fg }}">{{ p.price }}</span>
+            <span style="font-size:14px;color:{{ p.muted }}">{{ p.per }}</span>
+          </div>
+          <p style="margin:0 0 22px;font-size:13px;color:{{ p.muted }}">{{ p.sub }}</p>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px">
+            <sc-for list="{{ p.features }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45;color:{{ p.fg }}">
+                <span style="flex:none;width:7px;height:7px;margin-top:6px;background:{{ p.dot }};clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>{{ f }}
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{ p.join }}" style="width:100%;padding:16px;border:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;background:{{ p.btnBg }};color:{{ p.btnFg }};transition:transform .15s,opacity .2s" style-hover="transform:scale(1.02);opacity:.92" style-active="transform:scale(.98)">Join {{ p.name }}</button>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(255,255,255,.09);background:#0D0F0B;padding:clamp(64px,9vw,110px) clamp(16px,4vw,56px)">
+    <div style="max-width:1000px;margin:0 auto">
+      <p data-reveal style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 30px;text-align:center">04 / RECEIPTS</p>
+      <blockquote style="margin:0;text-align:center">
+        <p style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(22px,3.6vw,40px);line-height:1.22;letter-spacing:-.02em;text-wrap:balance">“{{ testimonial.quote }}”</p>
+        <footer style="margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:6px">
+          <span style="font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C8FF2E">{{ testimonial.name }}</span>
+          <span style="font-size:13px;color:#7E8278">{{ testimonial.meta }}</span>
+        </footer>
+      </blockquote>
+      <div style="display:flex;justify-content:center;gap:8px;margin-top:32px">
+        <sc-for list="{{ testiDots }}" as="d" hint-placeholder-count="4">
+          <button onClick="{{ d.go }}" aria-label="Show testimonial" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer;padding:0">
+            <span style="display:block;width:26px;height:3px;background:{{ d.color }};transition:background .3s"></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:clamp(64px,9vw,110px) clamp(16px,4vw,56px);max-width:1440px;margin:0 auto">
+    <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px">
+      <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(28px,4.4vw,52px);letter-spacing:-.03em">@IRONHAUS.ATX</h2>
+      <a href="#gallery" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em">FOLLOW THE FLOOR →</a>
+    </div>
+    <div id="gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px">
+      <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="8">
+        <div data-reveal style="position:relative;aspect-ratio:1;overflow:hidden;border:1px solid rgba(255,255,255,.08);cursor:pointer;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s" style-hover="transform:scale(1.035);border-color:#C8FF2E">
+          <img src="{{ g.img }}" alt="{{ g.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }}"></img>
+          <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,9,.85),transparent 55%)"></div>
+          <span style="position:absolute;left:12px;bottom:12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;color:#C9CCC2">{{ g.label }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isClasses }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:1440px;margin:0 auto">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">SCHEDULE</p>
+  <h1 style="margin:0 0 10px;font-family:'Archivo Black',sans-serif;font-size:clamp(38px,7vw,88px);line-height:.9;letter-spacing:-.035em">THIS WEEK ON THE FLOOR</h1>
+  <p style="margin:0 0 30px;max-width:560px;font-size:16px;line-height:1.6;color:#9A9E93">Every session capped at 14. Free cancellation up to 4 hours before start.</p>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">
+    <sc-for list="{{ typeFilters }}" as="f" hint-placeholder-count="7">
+      <button onClick="{{ f.go }}" style="padding:11px 17px;min-height:44px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:.2s">{{ f.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px">
+    <sc-for list="{{ trainerFilters }}" as="f" hint-placeholder-count="4">
+      <button onClick="{{ f.go }}" style="padding:11px 17px;min-height:44px;border:1px solid {{ f.border }};background:{{ f.bg }};color:{{ f.fg }};font-size:12.5px;font-weight:600;cursor:pointer;border-radius:2px;transition:.2s">{{ f.label }}</button>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ loadingSchedule }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px">
+      <sc-for list="{{ skeletons }}" as="s" hint-placeholder-count="4">
+        <div style="height:210px;border:1px solid rgba(255,255,255,.07);border-radius:3px;background:linear-gradient(90deg,#121410 0,#1B1F17 40%,#121410 80%);background-size:400px 100%;animation:ih-shimmer 1.1s linear infinite"></div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ scheduleReady }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px;align-items:start">
+      <sc-for list="{{ schedule }}" as="day" hint-placeholder-count="5">
+        <div style="background:#0F1109;border:1px solid rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
+          <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:baseline;background:#121410">
+            <span style="font-family:'Archivo Black',sans-serif;font-size:16px;letter-spacing:.04em">{{ day.name }}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:#7E8278">{{ day.count }}</span>
+          </div>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ day.items }}" as="c" hint-placeholder-count="3">
+              <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:10px;transition:background .25s" style-hover="background:#141712">
+                <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+                  <div>
+                    <button onClick="{{ c.open }}" style="background:none;border:0;padding:0;text-align:left;cursor:pointer;font-family:'Archivo Black',sans-serif;font-size:18px;letter-spacing:-.01em;color:#F2F3EF;transition:color .2s" style-hover="color:#C8FF2E">{{ c.name }}</button>
+                    <div style="margin-top:5px;font-size:12.5px;color:#9A9E93">{{ c.trainer }} · {{ c.dur }}</div>
+                  </div>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#C8FF2E;white-space:nowrap">{{ c.time }}</span>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;padding:4px 7px;border:1px solid {{ c.levelColor }};color:{{ c.levelColor }}">{{ c.level }}</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;padding:4px 7px;border:1px solid rgba(255,255,255,.14);color:{{ c.spotColor }}">{{ c.spotsLabel }}</span>
+                </div>
+                <button onClick="{{ c.book }}" style="width:100%;min-height:44px;border:0;cursor:pointer;border-radius:2px;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:{{ c.btnBg }};color:{{ c.btnFg }};transition:transform .15s,opacity .2s" style-hover="transform:scale(1.015);opacity:.92" style-active="transform:scale(.98)">{{ c.btnLabel }}</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ isTrainers }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:1440px;margin:0 auto">
+  <sc-if value="{{ trainerDetail }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:ih-fade .35s ease">
+      <button onClick="{{ closeTrainer }}" style="background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;padding:12px 18px;min-height:44px;font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-bottom:28px" style-hover="border-color:#C8FF2E;color:#C8FF2E">← All coaches</button>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:start">
+        <img src="{{ trainerDetail.img }}" alt="{{ trainerDetail.alt }}" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;border:1px solid rgba(255,255,255,.09)"></img>
+        <div>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;color:#C8FF2E;margin:0 0 12px">{{ trainerDetail.specialty }}</p>
+          <h1 style="margin:0 0 18px;font-family:'Archivo Black',sans-serif;font-size:clamp(34px,5.5vw,64px);line-height:.92;letter-spacing:-.03em">{{ trainerDetail.name }}</h1>
+          <p style="margin:0 0 20px;font-size:16px;line-height:1.65;color:#C9CCC2;max-width:52ch;text-wrap:pretty">{{ trainerDetail.bio }}</p>
+          <p style="margin:0 0 30px;font-size:13.5px;line-height:1.6;color:#7E8278">Certifications — {{ trainerDetail.certs }}</p>
+          <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:-.01em">THIS WEEK WITH {{ trainerDetail.first }}</h2>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ trainerDetail.classes }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;background:#121410;border:1px solid rgba(255,255,255,.08);border-radius:3px">
+                <div>
+                  <div style="font-weight:700;font-size:15px">{{ c.name }}</div>
+                  <div style="font-size:12.5px;color:#9A9E93;margin-top:3px">{{ c.day }} · {{ c.time }} · {{ c.dur }}</div>
+                </div>
+                <button onClick="{{ c.book }}" style="min-height:44px;padding:0 18px;border:0;border-radius:2px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:{{ c.btnBg }};color:{{ c.btnFg }}">{{ c.btnLabel }}</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ trainerListShown }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">THE STAFF</p>
+      <h1 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:clamp(38px,7vw,88px);line-height:.9;letter-spacing:-.035em">COACHES WHO COUNT REPS, NOT MINUTES.</h1>
+      <p style="margin:0 0 40px;max-width:560px;font-size:16px;line-height:1.6;color:#9A9E93">Nine full-time coaches. Average tenure six years. All of them program their own blocks.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(266px,1fr));gap:14px">
+        <sc-for list="{{ trainers }}" as="t" hint-placeholder-count="6">
+          <button data-reveal onClick="{{ t.open }}" style="text-align:left;background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;overflow:hidden;cursor:pointer;padding:0;transition:transform .3s,border-color .3s" style-hover="transform:translateY(-6px);border-color:#C8FF2E">
+            <img src="{{ t.img }}" alt="{{ t.alt }}" loading="lazy" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 30%"></img>
+            <div style="padding:20px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:#C8FF2E">{{ t.specialty }}</div>
+              <h2 style="margin:9px 0 8px;font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.02em">{{ t.name }}</h2>
+              <p style="margin:0 0 10px;font-size:13.5px;line-height:1.55;color:#9A9E93">{{ t.short }}</p>
+              <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C8FF2E">View schedule →</span>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ isPricing }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:1240px;margin:0 auto">
+  <div style="text-align:center">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">MEMBERSHIP</p>
+    <h1 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:clamp(38px,7vw,88px);line-height:.9;letter-spacing:-.035em">PAY FOR THE WORK. NOTHING ELSE.</h1>
+    <p style="margin:0 auto 26px;max-width:520px;font-size:16px;line-height:1.6;color:#9A9E93">Cancel any time from your dashboard. Annual saves you two months.</p>
+    <div style="display:inline-flex;background:#121410;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:4px;margin-bottom:38px">
+      <button onClick="{{ setMonthly }}" style="padding:13px 24px;min-height:44px;border:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:.25s;background:{{ monthlyBg }};color:{{ monthlyFg }}">Monthly</button>
+      <button onClick="{{ setAnnual }}" style="padding:13px 24px;min-height:44px;border:0;cursor:pointer;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:.25s;background:{{ annualBg }};color:{{ annualFg }}">Annual · save 17%</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;align-items:start;margin-bottom:56px">
+    <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+      <div style="background:{{ p.bg }};border:1px solid {{ p.border }};border-radius:3px;padding:30px 26px;transition:transform .3s" style-hover="transform:translateY(-6px)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:{{ p.tagColor }}">{{ p.tag }}</div>
+        <h2 style="margin:12px 0 4px;font-family:'Archivo Black',sans-serif;font-size:30px;letter-spacing:-.02em;color:{{ p.fg }}">{{ p.name }}</h2>
+        <div style="display:flex;align-items:baseline;gap:6px;margin:16px 0 4px">
+          <span style="font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1;letter-spacing:-.04em;color:{{ p.fg }}">{{ p.price }}</span>
+          <span style="font-size:14px;color:{{ p.muted }}">{{ p.per }}</span>
+        </div>
+        <p style="margin:0 0 22px;font-size:13px;color:{{ p.muted }}">{{ p.sub }}</p>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px">
+          <sc-for list="{{ p.features }}" as="f" hint-placeholder-count="5">
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.45;color:{{ p.fg }}">
+              <span style="flex:none;width:7px;height:7px;margin-top:6px;background:{{ p.dot }};clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>{{ f }}
+            </div>
+          </sc-for>
+        </div>
+        <button onClick="{{ p.join }}" style="width:100%;min-height:48px;border:0;cursor:pointer;border-radius:2px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:{{ p.btnBg }};color:{{ p.btnFg }};transition:transform .15s" style-hover="transform:scale(1.02)" style-active="transform:scale(.98)">Join {{ p.name }}</button>
+      </div>
+    </sc-for>
+  </div>
+  <h2 style="margin:0 0 16px;font-family:'Archivo Black',sans-serif;font-size:clamp(24px,3.4vw,36px);letter-spacing:-.02em">SIDE BY SIDE</h2>
+  <div style="overflow-x:auto;border:1px solid rgba(255,255,255,.09);border-radius:3px">
+    <table style="width:100%;min-width:560px;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr style="background:#121410">
+          <th style="text-align:left;padding:16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278;font-weight:600">Included</th>
+          <th style="padding:16px;font-family:'Archivo Black',sans-serif;font-size:15px">BASIC</th>
+          <th style="padding:16px;font-family:'Archivo Black',sans-serif;font-size:15px;color:#C8FF2E">PREMIUM</th>
+          <th style="padding:16px;font-family:'Archivo Black',sans-serif;font-size:15px">ELITE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <sc-for list="{{ compare }}" as="r" hint-placeholder-count="6">
+          <tr style="border-top:1px solid rgba(255,255,255,.07)">
+            <td style="padding:15px 16px;color:#C9CCC2">{{ r.label }}</td>
+            <td style="padding:15px 16px;text-align:center;color:#9A9E93">{{ r.basic }}</td>
+            <td style="padding:15px 16px;text-align:center;color:#C8FF2E;font-weight:600">{{ r.premium }}</td>
+            <td style="padding:15px 16px;text-align:center;color:#C9CCC2">{{ r.elite }}</td>
+          </tr>
+        </sc-for>
+      </tbody>
+    </table>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isJoin }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:820px;margin:0 auto">
+  <sc-if value="{{ joinDone }}" hint-placeholder-val="{{ false }}">
+    <div style="text-align:center;padding:40px 0">
+      <div style="position:relative;width:112px;height:112px;margin:0 auto 30px;display:flex;align-items:center;justify-content:center">
+        <span style="position:absolute;inset:0;border:2px solid #C8FF2E;border-radius:50%;animation:ih-ring 1.6s ease-out infinite"></span>
+        <span style="width:112px;height:112px;border-radius:50%;background:#C8FF2E;display:flex;align-items:center;justify-content:center;font-size:52px;color:#0A0B09;animation:ih-pop .6s cubic-bezier(.2,1.4,.4,1) both">✓</span>
+      </div>
+      <h1 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:clamp(32px,6vw,64px);line-height:.94;letter-spacing:-.03em;animation:ih-rise .6s .15s both">YOU'RE IN, {{ firstName }}.</h1>
+      <p style="margin:0 auto 30px;max-width:440px;font-size:16px;line-height:1.6;color:#9A9E93;animation:ih-rise .6s .25s both">{{ confirmLine }} Confirmation sent to {{ form.email }}. Bring shoes you can lift in.</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;animation:ih-rise .6s .35s both">
+        <button onClick="{{ goDash }}" style="background:#C8FF2E;color:#0A0B09;border:0;min-height:48px;padding:0 28px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Go to dashboard</button>
+        <button onClick="{{ goClasses }}" style="background:none;color:#F2F3EF;border:1px solid rgba(255,255,255,.2);min-height:48px;padding:0 28px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Book another class</button>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ joinActive }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">SIGN UP · 4 STEPS · 2 MINUTES</p>
+      <h1 style="margin:0 0 30px;font-family:'Archivo Black',sans-serif;font-size:clamp(34px,6vw,68px);line-height:.9;letter-spacing:-.035em">{{ stepTitle }}</h1>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <div style="flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden">
+            <span style="display:block;height:100%;background:#C8FF2E;transition:width .5s cubic-bezier(.2,.8,.2,1);width:{{ s.fill }}"></span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:0 0 32px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#7E8278">STEP {{ stepNum }} OF 4 — {{ stepName }}</p>
+
+      <sc-if value="{{ step1 }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;animation:ih-rise .4s both">
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">First name
+            <input value="{{ form.first }}" onChange="{{ onFirst }}" placeholder="Ada" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">Last name
+            <input value="{{ form.last }}" onChange="{{ onLast }}" placeholder="Okonkwo" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">Email
+            <input value="{{ form.email }}" onChange="{{ onEmail }}" placeholder="you@email.com" style="background:#121410;border:1px solid {{ emailBorder }};color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">Mobile
+            <input value="{{ form.phone }}" onChange="{{ onPhone }}" placeholder="(512) 555-0148" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          </label>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ step2 }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:10px;animation:ih-rise .4s both">
+          <sc-for list="{{ planChoices }}" as="p" hint-placeholder-count="3">
+            <button onClick="{{ p.pick }}" style="text-align:left;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:22px;background:{{ p.bg }};border:1px solid {{ p.border }};border-radius:3px;cursor:pointer;transition:.25s">
+              <div>
+                <div style="font-family:'Archivo Black',sans-serif;font-size:22px;color:{{ p.fg }}">{{ p.name }}</div>
+                <div style="margin-top:6px;font-size:13.5px;color:#9A9E93">{{ p.sub }}</div>
+              </div>
+              <div style="font-family:'Archivo Black',sans-serif;font-size:26px;color:{{ p.priceColor }}">{{ p.price }}<span style="font-size:13px;font-family:Archivo,sans-serif;color:#7E8278">{{ p.per }}</span></div>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ step3 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:ih-rise .4s both">
+          <p style="margin:0 0 16px;font-size:15px;color:#9A9E93">Optional — lock in your first session now. You can skip and book later.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px">
+            <sc-for list="{{ firstClassOptions }}" as="c" hint-placeholder-count="4">
+              <button onClick="{{ c.pick }}" style="text-align:left;padding:18px;background:{{ c.bg }};border:1px solid {{ c.border }};border-radius:3px;cursor:pointer;min-height:44px;transition:.25s">
+                <div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:{{ c.fg }}">{{ c.name }}</div>
+                <div style="margin-top:6px;font-size:12.5px;color:#9A9E93">{{ c.day }} · {{ c.time }} · {{ c.trainer }}</div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ step4 }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:ih-rise .4s both">
+          <div style="background:#121410;border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:22px;margin-bottom:18px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#7E8278;margin-bottom:14px">ORDER SUMMARY</div>
+            <sc-for list="{{ summary }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:14.5px">
+                <span style="color:#9A9E93">{{ s.k }}</span><span style="font-weight:600">{{ s.v }}</span>
+              </div>
+            </sc-for>
+            <div style="display:flex;justify-content:space-between;padding-top:16px;font-family:'Archivo Black',sans-serif;font-size:22px">
+              <span>DUE TODAY</span><span style="color:#C8FF2E">$0.00</span>
+            </div>
+            <p style="margin:10px 0 0;font-size:12.5px;color:#7E8278">First charge after your free 7-day trial ends.</p>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278;grid-column:1/-1">Card number
+              <input value="{{ form.card }}" onChange="{{ onCard }}" placeholder="4242 4242 4242 4242" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:'JetBrains Mono',monospace;min-height:48px">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">Expiry
+              <input placeholder="09 / 29" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:'JetBrains Mono',monospace;min-height:48px">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#7E8278">CVC
+              <input placeholder="123" style="background:#121410;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:'JetBrains Mono',monospace;min-height:48px">
+            </label>
+          </div>
+          <p style="margin:14px 0 0;font-size:12px;color:#6E7268;font-family:'JetBrains Mono',monospace">DEMO ONLY — NO PAYMENT IS PROCESSED.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ stepError }}" hint-placeholder-val="{{ false }}">
+        <p style="margin:18px 0 0;font-size:13.5px;color:#FF6B3D">{{ stepError }}</p>
+      </sc-if>
+
+      <div style="display:flex;gap:10px;margin-top:34px;flex-wrap:wrap">
+        <sc-if value="{{ canGoBack }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ joinBack }}" style="background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;min-height:50px;padding:0 26px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px" style-hover="border-color:#C8FF2E;color:#C8FF2E">← Back</button>
+        </sc-if>
+        <button onClick="{{ joinNext }}" style="flex:1;min-width:200px;background:#C8FF2E;color:#0A0B09;border:0;min-height:50px;padding:0 30px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .15s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,255,46,.3)" style-active="transform:scale(.98)">{{ nextLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{ isDash }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:1240px;margin:0 auto">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:36px">
+    <div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 12px">MEMBER SINCE MAR 2024</p>
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(34px,6vw,68px);line-height:.9;letter-spacing:-.035em">HELLO, {{ dashName }}.</h1>
+    </div>
+    <button onClick="{{ goClasses }}" style="background:#C8FF2E;color:#0A0B09;border:0;min-height:48px;padding:0 26px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Book a class</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:38px">
+    <sc-for list="{{ dashStats }}" as="s" hint-placeholder-count="4">
+      <div style="background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;padding:22px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#7E8278">{{ s.label }}</div>
+        <div style="margin-top:12px;font-family:'Archivo Black',sans-serif;font-size:38px;line-height:1;letter-spacing:-.03em;color:{{ s.color }}">{{ s.value }}</div>
+        <div style="margin-top:8px;font-size:12.5px;color:#7E8278">{{ s.note }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;align-items:start">
+    <div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.01em">UPCOMING</h2>
+      <sc-if value="{{ hasBookings }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <sc-for list="{{ bookings }}" as="b" hint-placeholder-count="2">
+            <div style="background:#121410;border:1px solid rgba(200,255,46,.22);border-radius:3px;padding:18px;animation:ih-rise .4s both">
+              <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline">
+                <span style="font-family:'Archivo Black',sans-serif;font-size:19px">{{ b.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#C8FF2E">{{ b.day }} · {{ b.time }}</span>
+              </div>
+              <div style="margin-top:6px;font-size:13px;color:#9A9E93">{{ b.trainer }} · {{ b.dur }} · Studio {{ b.room }}</div>
+              <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+                <button onClick="{{ b.reschedule }}" style="min-height:44px;padding:0 16px;background:none;border:1px solid rgba(255,255,255,.2);color:#F2F3EF;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px" style-hover="border-color:#C8FF2E;color:#C8FF2E">Reschedule</button>
+                <button onClick="{{ b.cancel }}" style="min-height:44px;padding:0 16px;background:none;border:1px solid rgba(255,107,61,.4);color:#FF6B3D;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px" style-hover="background:rgba(255,107,61,.1)">Cancel</button>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noBookings }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#121410;border:1px dashed rgba(255,255,255,.16);border-radius:3px;padding:34px;text-align:center">
+          <p style="margin:0 0 16px;color:#9A9E93;font-size:14.5px">Nothing on the board. Your streak doesn't care about excuses.</p>
+          <button onClick="{{ goClasses }}" style="background:#C8FF2E;color:#0A0B09;border:0;min-height:44px;padding:0 22px;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Find a class</button>
+        </div>
+      </sc-if>
+
+      <h2 style="margin:32px 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.01em">HISTORY</h2>
+      <div style="border:1px solid rgba(255,255,255,.09);border-radius:3px;overflow:hidden">
+        <sc-for list="{{ history }}" as="h" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;gap:12px;padding:15px 16px;border-bottom:1px solid rgba(255,255,255,.06);background:#0F1109;font-size:14px">
+            <span>{{ h.name }}</span>
+            <span style="color:#7E8278;font-family:'JetBrains Mono',monospace;font-size:12px">{{ h.date }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:-.01em">MEMBERSHIP</h2>
+      <div style="background:linear-gradient(150deg,#C8FF2E,#8FD400);color:#0A0B09;border-radius:3px;padding:26px;margin-bottom:14px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;opacity:.7">CURRENT PLAN</div>
+        <div style="font-family:'Archivo Black',sans-serif;font-size:38px;line-height:1;margin:12px 0 8px;letter-spacing:-.03em">PREMIUM</div>
+        <div style="font-size:14px;font-weight:600">Renews 14 Sep 2026 · $79/mo</div>
+        <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
+          <button onClick="{{ goPricing }}" style="min-height:44px;padding:0 16px;background:#0A0B09;color:#C8FF2E;border:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Change plan</button>
+          <button onClick="{{ pauseMembership }}" style="min-height:44px;padding:0 16px;background:rgba(10,11,9,.12);color:#0A0B09;border:1px solid rgba(10,11,9,.3);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px">Pause</button>
+        </div>
+      </div>
+      <div style="background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;padding:22px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#7E8278;margin-bottom:16px">8-WEEK BLOCK PROGRESS</div>
+        <sc-for list="{{ progress }}" as="p" hint-placeholder-count="3">
+          <div style="margin-bottom:16px">
+            <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:7px">
+              <span>{{ p.label }}</span><span style="color:#C8FF2E;font-family:'JetBrains Mono',monospace;font-size:12px">{{ p.val }}</span>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
+              <span style="display:block;height:100%;background:#C8FF2E;transition:width .8s cubic-bezier(.2,.8,.2,1);width:{{ p.pct }}"></span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<section style="padding:clamp(40px,6vw,72px) clamp(16px,4vw,56px) clamp(64px,9vw,110px);max-width:1240px;margin:0 auto">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;color:#C8FF2E;margin:0 0 14px">VISIT</p>
+  <h1 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:clamp(38px,7vw,88px);line-height:.9;letter-spacing:-.035em">1408 E 6TH ST, AUSTIN TX</h1>
+  <p style="margin:0 0 40px;max-width:520px;font-size:16px;line-height:1.6;color:#9A9E93">Two blocks east of Comal. Street parking on 6th, free lot behind the building after 5pm.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;align-items:start">
+    <div>
+      <div role="img" aria-label="Map showing IRONHAUS at 1408 East 6th Street, East Austin" style="position:relative;aspect-ratio:4/3;border:1px solid rgba(255,255,255,.1);border-radius:3px;overflow:hidden;background:
+        repeating-linear-gradient(0deg,transparent 0 39px,rgba(200,255,46,.09) 39px 40px),
+        repeating-linear-gradient(90deg,transparent 0 39px,rgba(200,255,46,.09) 39px 40px),#0E1009">
+        <span style="position:absolute;left:0;right:0;top:52%;height:8px;background:rgba(242,243,239,.09)"></span>
+        <span style="position:absolute;top:0;bottom:0;left:38%;width:6px;background:rgba(242,243,239,.07)"></span>
+        <span style="position:absolute;left:calc(38% - 5px);top:calc(52% - 30px);display:flex;flex-direction:column;align-items:center">
+          <span style="width:16px;height:16px;background:#C8FF2E;border-radius:50%;box-shadow:0 0 0 6px rgba(200,255,46,.2)"></span>
+          <span style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;background:#C8FF2E;color:#0A0B09;padding:4px 7px;white-space:nowrap">IRONHAUS</span>
+        </span>
+        <span style="position:absolute;bottom:10px;right:12px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:#6E7268">E 6TH ST × COMAL</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px">
+        <sc-for list="{{ contactInfo }}" as="c" hint-placeholder-count="4">
+          <div style="background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;padding:18px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#7E8278">{{ c.label }}</div>
+            <div style="margin-top:9px;font-size:14.5px;line-height:1.5;white-space:pre-line">{{ c.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="background:#121410;border:1px solid rgba(255,255,255,.09);border-radius:3px;padding:26px">
+      <h2 style="margin:0 0 18px;font-family:'Archivo Black',sans-serif;font-size:24px;letter-spacing:-.02em">SEND US A NOTE</h2>
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:26px;border:1px solid rgba(200,255,46,.35);background:rgba(200,255,46,.07);border-radius:3px;animation:ih-pop .45s both">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#C8FF2E;margin-bottom:8px">MESSAGE SENT</div>
+          <p style="margin:0;font-size:14px;color:#C9CCC2">We answer within one business day. Usually faster.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <input placeholder="Name" style="background:#0E1009;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          <input placeholder="Email" style="background:#0E1009;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;min-height:48px">
+          <textarea placeholder="What do you want to work on?" rows="5" style="background:#0E1009;border:1px solid rgba(255,255,255,.14);color:#F2F3EF;padding:15px;font-size:16px;border-radius:2px;font-family:Archivo,sans-serif;resize:vertical"></textarea>
+          <button onClick="{{ sendContact }}" style="background:#C8FF2E;color:#0A0B09;border:0;min-height:50px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:transform .15s" style-hover="transform:scale(1.01)" style-active="transform:scale(.98)">Send message</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid rgba(255,255,255,.09);background:#0D0F0B;padding:clamp(48px,7vw,84px) clamp(16px,4vw,56px) 34px">
+  <div style="max-width:1440px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="width:22px;height:22px;background:#C8FF2E;display:block;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>
+          <span style="font-family:'Archivo Black',sans-serif;font-size:19px">IRONHAUS</span>
+        </div>
+        <p style="margin:0;font-size:13.5px;line-height:1.6;color:#7E8278;max-width:26ch">Strength &amp; conditioning studio. East Austin since 2016.</p>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:#7E8278;margin-bottom:14px">EXPLORE</div>
+        <div style="display:flex;flex-direction:column;gap:9px;align-items:flex-start">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="6">
+            <button onClick="{{ n.go }}" style="background:none;border:0;padding:0;cursor:pointer;color:#C9CCC2;font-size:14px" style-hover="color:#C8FF2E">{{ n.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:#7E8278;margin-bottom:14px">HOURS</div>
+        <p style="margin:0;font-size:14px;line-height:1.7;color:#C9CCC2">Mon–Fri 05:30 – 22:00<br>Sat–Sun 07:00 – 19:00</p>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;color:#7E8278;margin-bottom:14px">CONTACT</div>
+        <p style="margin:0;font-size:14px;line-height:1.7;color:#C9CCC2">1408 E 6th St, Austin TX<br>(512) 555-0148<br><a href="mailto:front@ironhaus.fit">front@ironhaus.fit</a></p>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;padding-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#6E7268">
+      <span>© 2026 IRONHAUS ATX · ALL RIGHTS RESERVED</span>
+      <span>PRIVACY · TERMS · ACCESSIBILITY</span>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showFloating }}" hint-placeholder-val="{{ true }}">
+<div style="position:fixed;right:16px;bottom:16px;z-index:95;display:flex;flex-direction:column;gap:10px;align-items:flex-end">
+  <a href="tel:+15125550148" aria-label="Call IRONHAUS" style="width:52px;height:52px;border-radius:50%;background:#121410;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:20px;text-decoration:none;transition:.2s" style-hover="border-color:#C8FF2E;transform:scale(1.06)">☏</a>
+  <a href="https://wa.me/15125550148" aria-label="Message IRONHAUS on WhatsApp" style="width:52px;height:52px;border-radius:50%;background:#121410;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;text-decoration:none;transition:.2s" style-hover="border-color:#C8FF2E;transform:scale(1.06)">✆</a>
+  <button onClick="{{ goClasses }}" style="min-height:52px;padding:0 22px;border-radius:26px;background:#C8FF2E;color:#0A0B09;border:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(200,255,46,.28);transition:transform .15s" style-hover="transform:scale(1.05)" style-active="transform:scale(.96)">Book Now</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ modalClass }}" hint-placeholder-val="{{ false }}">
+<div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:130;background:rgba(6,7,5,.82);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;padding:0;animation:ih-fade .2s ease">
+  <div style="width:min(720px,100%);max-height:88vh;overflow-y:auto;background:#101208;border:1px solid rgba(200,255,46,.25);border-radius:4px 4px 0 0;padding:clamp(22px,4vw,36px);animation:ih-rise .35s cubic-bezier(.2,.8,.2,1) both;margin:auto 0 0">
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;color:#C8FF2E;margin:0 0 10px">{{ modalClass.day }} · {{ modalClass.time }} · {{ modalClass.dur }}</p>
+        <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:clamp(26px,4.5vw,42px);line-height:.96;letter-spacing:-.03em">{{ modalClass.name }}</h2>
+      </div>
+      <button onClick="{{ closeModal }}" aria-label="Close" style="flex:none;width:44px;height:44px;background:none;border:1px solid rgba(255,255,255,.18);color:#F2F3EF;font-size:20px;cursor:pointer;border-radius:2px">×</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 20px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:6px 9px;border:1px solid {{ modalClass.levelColor }};color:{{ modalClass.levelColor }}">{{ modalClass.level }}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:6px 9px;border:1px solid rgba(255,255,255,.16);color:#9A9E93">{{ modalClass.spotsLabel }}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:6px 9px;border:1px solid rgba(255,255,255,.16);color:#9A9E93">STUDIO {{ modalClass.room }}</span>
+    </div>
+    <p style="margin:0 0 22px;font-size:16px;line-height:1.65;color:#C9CCC2;text-wrap:pretty">{{ modalClass.desc }}</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px">
+      <div style="background:#161911;border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:18px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#7E8278;margin-bottom:9px">WHAT TO BRING</div>
+        <div style="font-size:14px;line-height:1.55;color:#C9CCC2">{{ modalClass.bring }}</div>
+      </div>
+      <div style="background:#161911;border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:18px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:#7E8278;margin-bottom:9px">YOUR COACH</div>
+        <div style="font-size:14px;line-height:1.55;color:#C9CCC2"><strong style="color:#F2F3EF">{{ modalClass.trainer }}</strong><br>{{ modalClass.trainerBio }}</div>
+      </div>
+    </div>
+    <button onClick="{{ modalClass.book }}" style="width:100%;min-height:52px;border:0;cursor:pointer;border-radius:2px;font-size:13.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:{{ modalClass.btnBg }};color:{{ modalClass.btnFg }};transition:transform .15s" style-hover="transform:scale(1.01)" style-active="transform:scale(.98)">{{ modalClass.btnLabel }}</button>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:140;background:#C8FF2E;color:#0A0B09;padding:15px 24px;border-radius:2px;font-size:14px;font-weight:700;letter-spacing:.04em;box-shadow:0 14px 40px rgba(0,0,0,.5);animation:ih-rise .3s cubic-bezier(.2,.8,.2,1) both;max-width:calc(100vw - 32px);text-align:center">{{ toast }}</div>
+</sc-if>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startRoute&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;classes&quot;,&quot;trainers&quot;,&quot;pricing&quot;,&quot;join&quot;,&quot;dashboard&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;annualPricing&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;},&quot;showFloatingActions&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behavior&quot;}}">
+const ACCENT = '#C8FF2E';
+const TRAINERS = [
+  {id:'mara',name:'Mara Vance',first:'MARA',specialty:'STRENGTH / POWERLIFTING',certs:'NSCA-CSCS, USAW L2, Precision Nutrition L1',short:'Ten years under a bar. Programs the Heavy Metal block.',bio:'Mara ran collegiate strength and conditioning for six years before opening the IRONHAUS barbell program. She coaches the squat like a craft: slow accessories, honest loads, and a logbook you actually fill in.'},
+  {id:'dez',name:'Dez Okafor',first:'DEZ',specialty:'BOXING / CONDITIONING',certs:'USA Boxing L2, NASM-CPT',short:'Amateur record 18-3. Teaches footwork before fists.',bio:'Dez spent nine years in the amateur ranks and now runs our boxing floor. Expect long rounds on the bag, real defensive drills, and zero cardio-kickboxing choreography.'},
+  {id:'iris',name:'Iris Lund',first:'IRIS',specialty:'YOGA / MOBILITY',certs:'RYT-500, FRCms, Yin 100hr',short:'Recovery is training. She makes sure you believe it.',bio:'Iris builds the mobility work that keeps heavy lifters lifting. Her sessions are quiet, precise, and unexpectedly hard — end range strength, not stretching for its own sake.'},
+  {id:'cole',name:'Cole Rivas',first:'COLE',specialty:'HIIT / METCON',certs:'CF-L3, NSCA-CSCS',short:'Built the 34-minute engine block. Sorry in advance.',bio:'Cole designs our conditioning: intervals with a purpose, scaled three ways, tracked week over week so you can see the engine getting bigger.'},
+  {id:'nia',name:'Nia Brooks',first:'NIA',specialty:'CYCLE / ENDURANCE',certs:'Schwinn Certified, ACE-CPT, Power-based training',short:'Power-based rides. Watts, not vibes.',bio:'Nia rides with numbers. Every bike is power-metered and every ride has a target — threshold work, sweet spot, or a genuinely fun sprint night on Fridays.'},
+  {id:'tomas',name:'Tomas Ehle',first:'TOMAS',specialty:'PERSONAL TRAINING / REHAB',certs:'DPT, NSCA-CSCS, FMS L2',short:'Physio background. The one you see after the tweak.',bio:'Tomas is a licensed physical therapist who works one-on-one with members returning from injury, bridging the gap between the clinic and the platform.'}
+];
+const LEVELS = {ALL:'#9A9E93','L1':'#7ED957','L2':'#C8FF2E','L3':'#FF6B3D'};
+const RAW = [
+  ['Heavy Metal','Strength','Mon','06:00','60','mara',4,'L2','A' ],
+  ['Engine Room','HIIT','Mon','12:15','45','cole',9,'L2','B'],
+  ['Mobility Reset','Mobility','Mon','18:30','45','iris',12,'L1','C'],
+  ['Bag Work 101','Boxing','Mon','19:30','60','dez',6,'L1','B'],
+  ['Squat Club','Strength','Tue','06:30','75','mara',2,'L3','A'],
+  ['Threshold Ride','Cycle','Tue','07:00','45','nia',5,'L2','D'],
+  ['Slow Flow','Yoga','Tue','17:30','60','iris',14,'L1','C'],
+  ['Metcon 34','HIIT','Tue','18:45','35','cole',0,'L3','B'],
+  ['Press Day','Strength','Wed','06:00','60','mara',7,'L2','A'],
+  ['Sparring Skills','Boxing','Wed','12:00','60','dez',3,'L2','B'],
+  ['Power Hour','Cycle','Wed','18:00','60','nia',8,'L2','D'],
+  ['Yin & Breath','Yoga','Wed','20:00','60','iris',11,'L1','C'],
+  ['Pull Day','Strength','Thu','06:30','60','mara',6,'L2','A'],
+  ['Engine Room','HIIT','Thu','12:15','45','cole',4,'L2','B'],
+  ['Footwork Lab','Boxing','Thu','18:30','45','dez',9,'L1','B'],
+  ['Deep Mobility','Mobility','Thu','19:30','45','iris',13,'L1','C'],
+  ['Total Body','Strength','Fri','06:00','60','mara',5,'L1','A'],
+  ['Sprint Night','Cycle','Fri','17:30','45','nia',1,'L3','D'],
+  ['Fight Fit','Boxing','Fri','18:30','60','dez',7,'L2','B'],
+  ['Saturday Grind','HIIT','Sat','09:00','60','cole',10,'L2','B'],
+  ['Barbell Basics','Strength','Sat','10:30','75','mara',8,'L1','A'],
+  ['Long Ride','Cycle','Sat','08:00','75','nia',6,'L2','D'],
+  ['Recovery Flow','Yoga','Sun','09:30','60','iris',15,'L1','C'],
+  ['Sunday Reset','Mobility','Sun','11:00','45','tomas',12,'L1','C']
+];
+const CLASS_COPY = {
+  Strength:['Barbell work in an 8-week block. Squat, press or pull as the main lift, then two accessories and a finisher. Loads come off your logbook, not a whiteboard guess.','Lifting shoes, a notebook, a belt if you own one. Chalk is on us.'],
+  HIIT:['Interval conditioning built on measurable work — rower, bike, sled and carries. Scaled three ways, always. You will know your score.','Cross-trainers, a towel, a bottle you can refill mid-round.'],
+  Boxing:['Technique first: stance, footwork, then combinations on the bag. Contact is optional and never a surprise.','Hand wraps (sold at front desk), gloves if you have them, water.'],
+  Yoga:['Slow, warm and mobility-driven — built for people who lift heavy the rest of the week. No inversions, no pressure.','Nothing. Mats, blocks and straps are here.'],
+  Cycle:['Power-metered ride with a written target for the day. Threshold, sweet spot or sprint sets, depending on the block.','Cycling shoes (SPD) or trainers, two bottles.'],
+  Mobility:['End-range strength work for hips, shoulders and ankles. Assessed on week one, re-tested on week eight.','Socks, a towel, patience.']
+};
+const PLAN_BASE = [
+  {name:'BASIC',tag:'GET STARTED',m:39,sub:'Open gym + 4 classes a month',features:['24/7 open gym access','4 group classes per month','Full locker room + towel service','Free InBody scan every quarter']},
+  {name:'PREMIUM',tag:'MOST POPULAR',m:79,sub:'Unlimited classes, everything open',features:['Everything in Basic','Unlimited group classes','Priority booking 14 days out','1 personal training session / month','Recovery room + sauna access']},
+  {name:'ELITE',tag:'FULL SUPPORT',m:129,sub:'Coached, programmed, tracked',features:['Everything in Premium','4 personal training sessions / month','Custom 8-week written program','Nutrition check-in every 2 weeks','Guest passes ×2 per month']}
+];
+const TESTIMONIALS = [
+  {quote:'I came in to lose weight and left with a 245 lb deadlift I didn\u2019t know I wanted. Fourteen months, three blocks, zero missed check-ins.',name:'Priya R.',meta:'Member since 2024 · Premium'},
+  {quote:'Every other gym sold me a year. IRONHAUS gave me a program and a coach who noticed when I stopped showing up.',name:'Marcus T.',meta:'Member since 2022 · Elite'},
+  {quote:'Post-surgery I thought heavy training was over. Tomas rebuilt my shoulder in eight weeks of boring, careful work. I press again.',name:'Elena D.',meta:'Member since 2023 · Elite'},
+  {quote:'The 06:00 crew is the only reason I get out of bed. Nobody performs. Everybody works.',name:'Jae Kim',meta:'Member since 2021 · Premium'}
+];
+const IMG = {strength:'img/strength.png',hiit:'img/hiit.png',boxing:'img/boxing.png',coaching:'img/coaching.png',yoga:'img/yoga.png'};
+const TRAINER_IMG = {mara:IMG.strength,dez:IMG.boxing,iris:IMG.yoga,cole:IMG.hiit,nia:IMG.hiit,tomas:IMG.coaching};
+const GALLERY = [
+  ['Member locking out a heavy deadlift on the platform','PLATFORM / 06:00',IMG.strength,'center 35%'],
+  ['Coach cueing a dumbbell row during a personal training session','SPOT / 1-ON-1',IMG.coaching,'center 30%'],
+  ['Fighter wrapping his hands before bag work','WRAPS / BAG ROW',IMG.boxing,'center 45%'],
+  ['Group class moving through a squat interval','ENGINE ROOM',IMG.hiit,'center 40%'],
+  ['Sunset yoga class in Studio C','STUDIO C / 20:00',IMG.yoga,'center 45%'],
+  ['Barbell set up for a strength block','STRENGTH BLOCK',IMG.strength,'left 40%'],
+  ['Coach leading the Saturday group session','SATURDAY CREW',IMG.hiit,'right 45%'],
+  ['Boxing gloves and wraps on the conditioning floor','GLOVES',IMG.boxing,'left 55%']
+];
+
+class Component extends DCLogic {
+  constructor(p){
+    super(p);
+    const w = typeof window !== 'undefined' ? window.innerWidth : 1280;
+    this.state = {
+      route: this.props.startRoute || 'home', navOpen:false, scrolled:false, pct:0, w,
+      annual: !!this.props.annualPricing, testi:0, typeFilter:'ALL', trainerFilter:'ALL',
+      loading:false, modal:null, toast:null, trainerId:null,
+      joinStep:1, joinDone:false, stepError:null,
+      form:{first:'',last:'',email:'',phone:'',plan:'PREMIUM',firstClass:null,card:''},
+      bookings:[{key:'b1',name:'Squat Club',day:'Tue',time:'06:30',dur:'75 min',trainer:'Mara Vance',room:'A'},{key:'b2',name:'Engine Room',day:'Thu',time:'12:15',dur:'45 min',trainer:'Cole Rivas',room:'B'}],
+      counts:[0,0,0,0], counted:false, contactSent:false
+    };
+    this.statsRef = React.createRef();
+    this.railRef = React.createRef();
+    this.classes = RAW.map((r,i)=>({key:'c'+i,name:r[0],type:r[1],day:r[2],time:r[3],dur:r[4]+' min',trainerId:r[5],spots:r[6],level:r[7],room:r[8]}));
+  }
+  componentDidMount(){
+    this.onScroll = () => {
+      const d = document.documentElement;
+      const max = (d.scrollHeight - d.clientHeight) || 1;
+      const y = window.scrollY || 0;
+      const pct = Math.min(100, Math.max(0, (y / max) * 100));
+      if (Math.abs(pct - this.state.pct) > 0.4 || (y > 30) !== this.state.scrolled) this.setState({pct, scrolled: y > 30});
+    };
+    this.onResize = () => { if (Math.abs(window.innerWidth - this.state.w) > 20) this.setState({w: window.innerWidth}); };
+    window.addEventListener('scroll', this.onScroll, {passive:true});
+    window.addEventListener('resize', this.onResize);
+    this.observe();
+    this.watchStats();
+  }
+  componentDidUpdate(){ this.observe(); this.watchStats(); }
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+    if (this.io) this.io.disconnect();
+    if (this.sio) this.sio.disconnect();
+    clearTimeout(this._toast);
+  }
+  observe(){
+    try{
+      if(!this.io && typeof IntersectionObserver !== 'undefined'){
+        this.io = new IntersectionObserver(es => es.forEach(e => {
+          if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='none'; this.io.unobserve(e.target); }
+        }), {rootMargin:'0px 0px -8% 0px', threshold:0.06});
+      }
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        if(el.dataset.revealed) return;
+        el.dataset.revealed = '1';
+        el.style.opacity='0'; el.style.transform='translateY(26px)';
+        el.style.transition='opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)';
+        if(this.io) this.io.observe(el); else { el.style.opacity='1'; el.style.transform='none'; }
+      });
+      clearTimeout(this._safety);
+      this._safety = setTimeout(()=>document.querySelectorAll('[data-reveal]').forEach(el=>{el.style.opacity='1';el.style.transform='none';}),2500);
+    }catch(e){}
+  }
+  watchStats(){
+    const el = this.statsRef.current;
+    if(!el || this.state.counted || this._counting || this.sio || typeof IntersectionObserver === 'undefined') return;
+    this.sio = new IntersectionObserver(es => {
+      if(es.some(e=>e.isIntersecting)){ this.sio.disconnect(); this.sio = null; this.runCount(); }
+    }, {threshold:0.25});
+    this.sio.observe(el);
+  }
+  runCount(){
+    if(this._counting) return;
+    this._counting = true;
+    const targets = [2840, 9, 41, 62];
+    const t0 = performance.now(), dur = 1500;
+    const tick = () => {
+      const p = Math.min(1, (performance.now()-t0)/dur);
+      const e = 1 - Math.pow(1-p, 3);
+      this.setState({counts: targets.map(v => Math.round(v*e)), counted: p>=1});
+      if(p<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  go(route){
+    this.setState({route, navOpen:false, modal:null, trainerId: route==='trainers'?this.state.trainerId:null});
+    try{ window.scrollTo({top:0,behavior:'smooth'}); }catch(e){}
+  }
+  flash(msg){ clearTimeout(this._toast); this.setState({toast:msg}); this._toast = setTimeout(()=>this.setState({toast:null}), 2600); }
+  book(c){
+    if(c.spots<=0){ this.flash('That session is full — join the waitlist at the desk.'); return; }
+    if(this.state.bookings.some(b=>b.key===c.key)){ this.flash('Already on your schedule.'); return; }
+    const t = TRAINERS.find(t=>t.id===c.trainerId);
+    this.setState(s=>({bookings:[...s.bookings,{key:c.key,name:c.name,day:c.day,time:c.time,dur:c.dur,trainer:t.name,room:c.room}],modal:null}));
+    this.flash('Booked — ' + c.name + ', ' + c.day + ' ' + c.time);
+  }
+  cancel(key){ this.setState(s=>({bookings:s.bookings.filter(b=>b.key!==key)})); this.flash('Class cancelled. No charge.'); }
+  setFilter(k,v){ this.setState({[k]:v, loading:true}); clearTimeout(this._load); this._load = setTimeout(()=>this.setState({loading:false}), 340); }
+  joinNext(){
+    const {joinStep, form} = this.state;
+    if(joinStep===1){
+      if(!form.first.trim() || !form.last.trim()) return this.setState({stepError:'We need your first and last name to make a member card.'});
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) return this.setState({stepError:'That email doesn\u2019t look right.'});
+    }
+    if(joinStep===4){ this.setState({joinDone:true, stepError:null}); try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){} return; }
+    this.setState({joinStep: joinStep+1, stepError:null});
+  }
+  fmtPrice(m){ return this.state.annual ? '$' + Math.round(m*10) : '$' + m; }
+  renderVals(){
+    const S = this.state, self = this;
+    const isMobile = S.w < 1060;
+    const routes = [['home','Home'],['classes','Schedule'],['trainers','Coaches'],['pricing','Membership'],['contact','Visit']];
+    const cls = c => {
+      const t = TRAINERS.find(x=>x.id===c.trainerId);
+      const copy = CLASS_COPY[c.type] || ['',''];
+      const booked = S.bookings.some(b=>b.key===c.key);
+      const full = c.spots<=0;
+      return Object.assign({}, c, {
+        trainer: t.name, trainerBio: t.short, alt: t.name,
+        levelColor: LEVELS[c.level],
+        spotsLabel: full ? 'WAITLIST' : c.spots + ' SPOTS LEFT',
+        spotColor: full ? '#FF6B3D' : (c.spots<4 ? '#FFB020' : '#9A9E93'),
+        desc: copy[0], bring: copy[1],
+        btnLabel: booked ? 'Booked ✓' : (full ? 'Join waitlist' : 'Book now'),
+        btnBg: booked ? 'rgba(200,255,46,.16)' : (full ? 'rgba(255,255,255,.08)' : ACCENT),
+        btnFg: booked ? ACCENT : (full ? '#9A9E93' : '#0A0B09'),
+        open: () => self.setState({modal:c.key}),
+        book: () => self.book(c)
+      });
+    };
+    const filtered = this.classes.filter(c =>
+      (S.typeFilter==='ALL' || c.type===S.typeFilter) &&
+      (S.trainerFilter==='ALL' || c.trainerId===S.trainerFilter));
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const schedule = days.map(d=>{
+      const items = filtered.filter(c=>c.day===d).sort((a,b)=>a.time.localeCompare(b.time)).map(cls);
+      return {name:d.toUpperCase()+'DAY'.slice(0,0)+'', key:d, count: items.length + ' CLASSES', items};
+    }).filter(d=>d.items.length);
+    const dayNames = {Mon:'MONDAY',Tue:'TUESDAY',Wed:'WEDNESDAY',Thu:'THURSDAY',Fri:'FRIDAY',Sat:'SATURDAY',Sun:'SUNDAY'};
+    schedule.forEach(d => d.name = dayNames[d.key]);
+    const chip = (active) => active
+      ? {bg:ACCENT,fg:'#0A0B09',border:ACCENT}
+      : {bg:'transparent',fg:'#C9CCC2',border:'rgba(255,255,255,.16)'};
+    const types = ['ALL','Strength','HIIT','Boxing','Yoga','Cycle','Mobility'];
+    const modalC = S.modal ? cls(this.classes.find(c=>c.key===S.modal)) : null;
+    const td = S.trainerId ? TRAINERS.find(t=>t.id===S.trainerId) : null;
+    const plans = PLAN_BASE.map((p,i)=>{
+      const hero = p.name==='PREMIUM';
+      return {
+        name:p.name, tag:p.tag, sub:p.sub, features:p.features,
+        price:this.fmtPrice(p.m), per:S.annual?'/year':'/month',
+        bg: hero?'linear-gradient(165deg,#C8FF2E,#A9E514)':'#121410',
+        border: hero?ACCENT:'rgba(255,255,255,.1)',
+        fg: hero?'#0A0B09':'#F2F3EF', muted: hero?'rgba(10,11,9,.62)':'#9A9E93',
+        tagColor: hero?'rgba(10,11,9,.6)':ACCENT, dot: hero?'#0A0B09':ACCENT,
+        btnBg: hero?'#0A0B09':ACCENT, btnFg: hero?ACCENT:'#0A0B09',
+        join: () => { self.setState(s=>({form:Object.assign({},s.form,{plan:p.name}), joinStep:1, joinDone:false})); self.go('join'); }
+      };
+    });
+    const stepNames = ['','WHO ARE YOU','PICK A PLAN','FIRST SESSION','PAYMENT'];
+    const stepTitles = ['','START WITH THE BASICS.','CHOOSE YOUR LANE.','LOCK IN SESSION ONE.','LAST STEP. PROMISE.'];
+    const firstOpts = this.classes.filter(c=>c.spots>3).slice(0,4).map(c=>{
+      const sel = S.form.firstClass===c.key;
+      const t = TRAINERS.find(x=>x.id===c.trainerId);
+      return {name:c.name,day:c.day,time:c.time,trainer:t.name,
+        bg: sel?'rgba(200,255,46,.1)':'#121410', border: sel?ACCENT:'rgba(255,255,255,.1)', fg: sel?ACCENT:'#F2F3EF',
+        pick: () => self.setState(s=>({form:Object.assign({},s.form,{firstClass: s.form.firstClass===c.key?null:c.key})}))};
+    });
+    const chosen = S.form.firstClass ? this.classes.find(c=>c.key===S.form.firstClass) : null;
+    const planObj = PLAN_BASE.find(p=>p.name===S.form.plan) || PLAN_BASE[1];
+    const upd = k => e => { const v = e.target.value; self.setState(s=>({form:Object.assign({},s.form,{[k]:v}), stepError:null})); };
+    return {
+      isDesktop: !isMobile, isMobile,
+      navOpen: S.navOpen, toggleNav: () => this.setState(s=>({navOpen:!s.navOpen})),
+      scrollPct: S.pct.toFixed(1),
+      navBg: S.scrolled ? 'rgba(10,11,9,.9)' : 'transparent',
+      navBorder: S.scrolled ? 'rgba(255,255,255,.09)' : 'transparent',
+      navPad: S.scrolled ? '12px' : '18px',
+      navItems: routes.map(([r,l])=>({label:l, color: S.route===r?ACCENT:'#C9CCC2', go: ()=>self.go(r)})),
+      isHome:S.route==='home', isClasses:S.route==='classes', isTrainers:S.route==='trainers',
+      isPricing:S.route==='pricing', isJoin:S.route==='join', isDash:S.route==='dashboard', isContact:S.route==='contact',
+      goHome:()=>self.go('home'), goClasses:()=>self.go('classes'), goJoin:()=>{self.setState({joinDone:false,joinStep:1});self.go('join')},
+      goDash:()=>self.go('dashboard'), goPricing:()=>self.go('pricing'),
+      showFloating: this.props.showFloatingActions !== false,
+      categories: [
+        {num:'01',name:'STRENGTH',blurb:'Barbell blocks, real loads, a logbook that fills up.',count:6,type:'Strength',img:IMG.strength,alt:'Member pulling a heavy deadlift during a strength block'},
+        {num:'02',name:'HIIT',blurb:'Measured intervals. Rower, bike, sled, carry, repeat.',count:4,type:'HIIT',img:IMG.hiit,alt:'Coach leading a group HIIT class through squat intervals'},
+        {num:'03',name:'BOXING',blurb:'Footwork before fists. Contact always optional.',count:4,type:'Boxing',img:IMG.boxing,alt:'Boxer wrapping his hands before bag work'},
+        {num:'04',name:'YOGA',blurb:'Warm, slow, built for people who lift heavy.',count:3,type:'Yoga',img:IMG.yoga,alt:'Sunset yoga class seated in the studio'},
+        {num:'05',name:'CYCLE',blurb:'Power-metered rides with a written target.',count:4,type:'Cycle',img:IMG.hiit,alt:'Members training together in the conditioning studio'},
+        {num:'06',name:'MOBILITY',blurb:'End-range strength. Assessed and re-tested.',count:3,type:'Mobility',img:IMG.coaching,alt:'Coach guiding a member through a controlled dumbbell row'}
+      ].map(c=>Object.assign({},c,{go:()=>{self.setFilter('typeFilter',c.type);self.go('classes')}})),
+      stats: [
+        {value: S.counts[0].toLocaleString()+'+', label:'Active members', note:'Capped at 3,000 by design'},
+        {value: S.counts[1], label:'Full-time coaches', note:'Average tenure six years'},
+        {value: S.counts[2], label:'Classes each week', note:'14 athletes max, every time'},
+        {value: S.counts[3]+'%', label:'Hit their 8-week goal', note:'Measured, not self-reported'}
+      ],
+      trainers: TRAINERS.map(t=>Object.assign({},t,{img:TRAINER_IMG[t.id], alt:'Portrait of '+t.name+', '+t.specialty.toLowerCase()+' coach at IRONHAUS', open:()=>{self.setState({trainerId:t.id});self.go('trainers');}})),
+      trainerRail: this.railRef,
+      trainerPrev: ()=>{ const el=this.railRef.current; if(el) el.scrollBy({left:-340,behavior:'smooth'}); },
+      trainerNext: ()=>{ const el=this.railRef.current; if(el) el.scrollBy({left:340,behavior:'smooth'}); },
+      statsRef: this.statsRef,
+      annual:S.annual, setMonthly:()=>this.setState({annual:false}), setAnnual:()=>this.setState({annual:true}),
+      monthlyBg: S.annual?'transparent':ACCENT, monthlyFg: S.annual?'#C9CCC2':'#0A0B09',
+      annualBg: S.annual?ACCENT:'transparent', annualFg: S.annual?'#0A0B09':'#C9CCC2',
+      plans,
+      compare: [
+        {label:'Open gym access',basic:'24/7',premium:'24/7',elite:'24/7'},
+        {label:'Group classes',basic:'4 / month',premium:'Unlimited',elite:'Unlimited'},
+        {label:'Personal training',basic:'—',premium:'1 / month',elite:'4 / month'},
+        {label:'Written program',basic:'—',premium:'Templates',elite:'Custom 8-week'},
+        {label:'Recovery room + sauna',basic:'—',premium:'Included',elite:'Included'},
+        {label:'Guest passes',basic:'—',premium:'1 / month',elite:'2 / month'},
+        {label:'Booking window',basic:'3 days',premium:'14 days',elite:'21 days'}
+      ],
+      testimonial: TESTIMONIALS[S.testi],
+      testiDots: TESTIMONIALS.map((t,i)=>({color: i===S.testi?ACCENT:'rgba(255,255,255,.2)', go:()=>self.setState({testi:i})})),
+      gallery: GALLERY.map(g=>({alt:g[0],label:g[1],img:g[2],pos:g[3]})),
+      typeFilters: types.map(t=>Object.assign({label: t==='ALL'?'All classes':t}, chip(S.typeFilter===t), {go:()=>self.setFilter('typeFilter',t)})),
+      trainerFilters: [{id:'ALL',name:'All coaches'}].concat(TRAINERS.map(t=>({id:t.id,name:t.name}))).map(t=>Object.assign({label:t.name}, chip(S.trainerFilter===t.id), {go:()=>self.setFilter('trainerFilter',t.id)})),
+      loadingSchedule: S.loading, scheduleReady: !S.loading, skeletons:[1,2,3,4],
+      schedule,
+      modalClass: modalC, closeModal: ()=>self.setState({modal:null}),
+      toast: S.toast,
+      trainerDetail: td ? Object.assign({}, td, {
+        img: TRAINER_IMG[td.id], alt:'Portrait of '+td.name+', '+td.specialty.toLowerCase()+' coach at IRONHAUS',
+        classes: this.classes.filter(c=>c.trainerId===td.id).map(c=>{ const m = cls(c); return {name:m.name,day:m.day,time:m.time,dur:m.dur,btnLabel:m.btnLabel,btnBg:m.btnBg,btnFg:m.btnFg,book:m.book}; })
+      }) : null,
+      trainerListShown: !td, closeTrainer: ()=>self.setState({trainerId:null}),
+      joinDone:S.joinDone, joinActive:!S.joinDone,
+      stepNum:S.joinStep, stepName:stepNames[S.joinStep], stepTitle:stepTitles[S.joinStep],
+      steps:[1,2,3,4].map(i=>({fill: S.joinStep>=i?'100%':'0%'})),
+      step1:S.joinStep===1, step2:S.joinStep===2, step3:S.joinStep===3, step4:S.joinStep===4,
+      canGoBack:S.joinStep>1, joinBack:()=>this.setState(s=>({joinStep:Math.max(1,s.joinStep-1),stepError:null})),
+      joinNext:()=>this.joinNext(), nextLabel: S.joinStep===4?'Start my free trial':'Continue →',
+      stepError:S.stepError, emailBorder: S.stepError && S.stepError.indexOf('email')>-1 ? '#FF6B3D' : 'rgba(255,255,255,.14)',
+      form:S.form, firstName:(S.form.first||'Athlete').toUpperCase(),
+      onFirst:upd('first'), onLast:upd('last'), onEmail:upd('email'), onPhone:upd('phone'), onCard:upd('card'),
+      planChoices: PLAN_BASE.map(p=>{
+        const sel = S.form.plan===p.name;
+        return {name:p.name, sub:p.sub, price:this.fmtPrice(p.m), per: S.annual?'/yr':'/mo',
+          bg: sel?'rgba(200,255,46,.09)':'#121410', border: sel?ACCENT:'rgba(255,255,255,.1)',
+          fg: sel?ACCENT:'#F2F3EF', priceColor: sel?ACCENT:'#F2F3EF',
+          pick:()=>self.setState(s=>({form:Object.assign({},s.form,{plan:p.name})}))};
+      }),
+      firstClassOptions: firstOpts,
+      summary: [
+        {k:'Plan', v: planObj.name + ' · ' + this.fmtPrice(planObj.m) + (S.annual?'/yr':'/mo')},
+        {k:'First session', v: chosen ? chosen.name + ' · ' + chosen.day + ' ' + chosen.time : 'Book later'},
+        {k:'Trial', v:'7 days free'},
+        {k:'Joining fee', v:'Waived'}
+      ],
+      confirmLine: chosen ? ('See you at ' + chosen.name + ', ' + chosen.day + ' ' + chosen.time + '.') : 'Your 7-day trial starts now.',
+      dashName: (S.form.first || 'Priya').toUpperCase(),
+      dashStats: [
+        {label:'WORKOUTS THIS BLOCK', value:'23', color:ACCENT, note:'of 32 programmed'},
+        {label:'CURRENT STREAK', value:'11', color:ACCENT, note:'weeks without a miss'},
+        {label:'UPCOMING', value:String(S.bookings.length), color:'#F2F3EF', note:'classes booked'},
+        {label:'PR THIS BLOCK', value:'+35', color:'#F2F3EF', note:'lb on back squat'}
+      ],
+      bookings: S.bookings.map(b=>Object.assign({},b,{cancel:()=>self.cancel(b.key), reschedule:()=>{self.flash('Pick a new slot on the schedule.');self.go('classes');}})),
+      hasBookings: S.bookings.length>0, noBookings: S.bookings.length===0,
+      history: [
+        {name:'Press Day',date:'05 AUG'},{name:'Slow Flow',date:'03 AUG'},{name:'Metcon 34',date:'01 AUG'},{name:'Squat Club',date:'30 JUL'},{name:'Bag Work 101',date:'28 JUL'}
+      ],
+      progress: [
+        {label:'Sessions completed',val:'23 / 32',pct:'72%'},
+        {label:'Squat block target',val:'315 lb / 340 lb',pct:'86%'},
+        {label:'Mobility re-test',val:'Week 6 of 8',pct:'75%'}
+      ],
+      pauseMembership: ()=>self.flash('Membership pause request sent to the front desk.'),
+      contactInfo: [
+        {label:'ADDRESS', value:'1408 E 6th St\nAustin, TX 78702'},
+        {label:'PHONE', value:'(512) 555-0148'},
+        {label:'HOURS', value:'Mon–Fri 05:30–22:00\nSat–Sun 07:00–19:00'},
+        {label:'SOCIAL', value:'@ironhaus.atx\nfront@ironhaus.fit'}
+      ],
+      contactSent:S.contactSent, contactOpen:!S.contactSent,
+      sendContact: ()=>{ self.setState({contactSent:true}); self.flash('Message sent — we reply within a day.'); }
+    };
+  }
+}
+</script>
+</body>
+</html>
