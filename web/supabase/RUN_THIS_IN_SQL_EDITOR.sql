@@ -1,9 +1,36 @@
 -- ============================================================
 -- IRONHAUS — full schema + seed, in order.
 -- Paste this whole file into Supabase Dashboard → SQL Editor → New query → Run.
+-- Safe to re-run: starts with an idempotent reset, so a previous
+-- partial/failed attempt won't cause 'already exists' errors.
 -- (Individual, versioned files are in supabase/migrations/ + supabase/seed.sql
 -- for future `supabase db push` once the CLI is linked to this project.)
 -- ============================================================
+
+-- ---- 0000_reset.sql ----
+-- Idempotent cleanup so RUN_THIS_IN_SQL_EDITOR.sql can be re-run safely after
+-- a partial/failed run. Safe to run even if nothing exists yet.
+
+drop trigger if exists on_auth_user_created on auth.users;
+drop function if exists public.handle_new_user();
+drop function if exists public.book_class(uuid);
+drop function if exists public.cancel_booking(uuid);
+
+drop table if exists public.bookings cascade;
+drop table if exists public.contact_messages cascade;
+drop table if exists public.members cascade;
+drop table if exists public.classes cascade;
+drop table if exists public.class_categories cascade;
+drop table if exists public.testimonials cascade;
+drop table if exists public.gallery_items cascade;
+drop table if exists public.plans cascade;
+drop table if exists public.trainers cascade;
+
+drop type if exists class_type;
+drop type if exists class_level;
+drop type if exists weekday;
+drop type if exists billing_cycle;
+drop type if exists booking_status;
 
 -- ---- migrations/0001_init_schema.sql ----
 -- IRONHAUS core schema
