@@ -1,0 +1,22 @@
+.wrap {
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  background: #c8ff2e;
+  padding: 11px 0;
+}
+
+.track {
+  display: flex;
+  width: 200%;
+  animation: ih-marquee 26s linear infinite;
+  white-space: nowrap;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #0a0b09;
+}
+
+.item {
+  padding-right: 28px;
+}

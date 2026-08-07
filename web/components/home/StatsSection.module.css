@@ -1,0 +1,38 @@
+.section {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  background: #0d0f0b;
+  padding: clamp(56px, 8vw, 96px) clamp(16px, 4vw, 56px);
+}
+
+.grid {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 36px 24px;
+}
+
+.value {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #c8ff2e;
+}
+
+.label {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f2f3ef;
+}
+
+.note {
+  margin-top: 5px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #7e8278;
+}

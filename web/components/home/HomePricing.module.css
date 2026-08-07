@@ -1,0 +1,26 @@
+.section {
+  padding: 0 clamp(16px, 4vw, 56px) clamp(64px, 9vw, 120px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.head {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: #c8ff2e;
+  margin: 0 0 14px;
+}
+
+.h2 {
+  margin: 0 0 22px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(32px, 5.5vw, 66px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}

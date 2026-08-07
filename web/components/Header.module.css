@@ -1,0 +1,259 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background 0.35s,
+    border-color 0.35s,
+    padding 0.35s;
+  padding: 18px clamp(16px, 4vw, 56px);
+  border-bottom: 1px solid transparent;
+  background: transparent;
+}
+
+.header[data-scrolled="true"] {
+  padding: 12px clamp(16px, 4vw, 56px);
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+  background: rgba(10, 11, 9, 0.9);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logoMark {
+  width: 26px;
+  height: 26px;
+  background: #c8ff2e;
+  display: block;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+.logoText {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: #f2f3ef;
+}
+
+.desktopNav {
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.navLink {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c9ccc2;
+  transition: color 0.2s;
+}
+
+.navLink:hover,
+.navLink[data-active="true"] {
+  color: #c8ff2e;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.accountBtn {
+  display: none;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f2f3ef;
+  cursor: pointer;
+  padding: 11px 18px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: 0.2s;
+}
+
+.accountBtn:hover {
+  border-color: #c8ff2e;
+  color: #c8ff2e;
+}
+
+.joinBtn {
+  background: #c8ff2e;
+  color: #0a0b09;
+  border: 0;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s;
+}
+
+.joinBtn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 24px rgba(200, 255, 46, 0.4);
+}
+
+.joinBtn:active {
+  transform: scale(0.97);
+}
+
+.hamburger {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.hamburgerBar {
+  width: 18px;
+  height: 2px;
+  background: #f2f3ef;
+  display: block;
+}
+
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: rgba(10, 11, 9, 0.75);
+  animation: ih-fade 0.2s ease;
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(340px, 86vw);
+  background: #101208;
+  border-left: 1px solid rgba(200, 255, 46, 0.22);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: ih-slidein 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+}
+
+.drawerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.drawerTitle {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 18px;
+}
+
+.drawerClose {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f2f3ef;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.drawerLink {
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  color: #f2f3ef;
+  padding: 16px 4px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.drawerLink[data-active="true"] {
+  color: #c8ff2e;
+}
+
+.drawerJoin {
+  margin-top: 18px;
+  background: #c8ff2e;
+  color: #0a0b09;
+  border: 0;
+  padding: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  text-align: center;
+}
+
+@media (min-width: 1060px) {
+  .desktopNav {
+    display: flex;
+  }
+  .accountBtn {
+    display: block;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+
+@keyframes ih-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ih-slidein {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}

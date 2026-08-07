@@ -1,0 +1,81 @@
+.section {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  background: #0d0f0b;
+  padding: clamp(64px, 9vw, 110px) clamp(16px, 4vw, 56px);
+}
+
+.inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: #c8ff2e;
+  margin: 0 0 30px;
+  text-align: center;
+}
+
+.quote {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(22px, 3.6vw, 40px);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.footer {
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c8ff2e;
+}
+
+.meta {
+  font-size: 13px;
+  color: #7e8278;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.dotBtn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dot {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.3s;
+}
+
+.dot[data-active="true"] {
+  background: #c8ff2e;
+}

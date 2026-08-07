@@ -1,0 +1,177 @@
+html {
+  scroll-behavior: smooth;
+  max-width: 100vw;
+  overflow-x: hidden;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  max-width: 100vw;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: #0a0b09;
+  color: #f2f3ef;
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: #c8ff2e;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #e6ff8f;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: #c8ff2e;
+  color: #0a0b09;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6e7268;
+}
+
+input:focus,
+textarea:focus,
+button:focus-visible {
+  outline: 2px solid #c8ff2e;
+  outline-offset: 2px;
+}
+
+@keyframes ih-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ih-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ih-slidein {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes ih-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes ih-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes ih-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes ih-shimmer {
+  from {
+    background-position: -400px 0;
+  }
+  to {
+    background-position: 400px 0;
+  }
+}
+
+.ih-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.ih-reveal.ih-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.ih-lift {
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s;
+}
+
+.ih-lift:hover {
+  transform: translateY(-6px);
+  border-color: #c8ff2e;
+}
+
+.ih-scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.ih-fab {
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+}
+
+.ih-fab:hover {
+  border-color: #c8ff2e;
+  transform: scale(1.06);
+}
+
+.ih-fab-book {
+  transition: transform 0.15s;
+}
+
+.ih-fab-book:hover {
+  transform: scale(1.05);
+}
+
+.ih-fab-book:active {
+  transform: scale(0.96);
+}

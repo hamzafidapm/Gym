@@ -1,0 +1,97 @@
+.section {
+  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 56px) clamp(64px, 9vw, 110px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: #c8ff2e;
+  margin: 0 0 14px;
+}
+
+.h1 {
+  margin: 0 0 12px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(38px, 7vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+
+.lede {
+  margin: 0 0 40px;
+  max-width: 560px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #9a9e93;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(266px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  display: block;
+  text-align: left;
+  background: #121410;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  overflow: hidden;
+  padding: 0;
+  transition:
+    transform 0.3s,
+    border-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #c8ff2e;
+}
+
+.cardImgWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.cardImg {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.specialty {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: #c8ff2e;
+}
+
+.name {
+  margin: 9px 0 8px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+}
+
+.short {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #9a9e93;
+}
+
+.viewLink {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c8ff2e;
+}

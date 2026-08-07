@@ -1,0 +1,140 @@
+.section {
+  padding: clamp(64px, 9vw, 120px) clamp(16px, 4vw, 56px);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 44px;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: #c8ff2e;
+  margin: 0 0 14px;
+}
+
+.h2 {
+  margin: 0;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(32px, 5.5vw, 66px);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+.viewAll {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f2f3ef;
+  padding: 15px 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: 0.2s;
+  display: inline-block;
+}
+
+.viewAll:hover {
+  border-color: #c8ff2e;
+  color: #c8ff2e;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  display: block;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  background: #121410;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  padding: 26px 24px 24px;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #c8ff2e;
+}
+
+.cardImg {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0.42;
+}
+
+.cardScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    #0b0d08 12%,
+    rgba(11, 13, 8, 0.72) 55%,
+    rgba(11, 13, 8, 0.45)
+  );
+}
+
+.cardTop {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cardNum {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: #c8ff2e;
+}
+
+.cardCount {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #6e7268;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 5px 8px;
+}
+
+.cardBody {
+  position: relative;
+}
+
+.cardTitle {
+  margin: 0 0 8px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: #f2f3ef;
+}
+
+.cardBlurb {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #9a9e93;
+}

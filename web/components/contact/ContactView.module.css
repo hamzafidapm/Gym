@@ -1,0 +1,231 @@
+.section {
+  padding: clamp(40px, 6vw, 72px) clamp(16px, 4vw, 56px) clamp(64px, 9vw, 110px);
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  color: #c8ff2e;
+  margin: 0 0 14px;
+}
+
+.h1 {
+  margin: 0 0 12px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: clamp(38px, 7vw, 88px);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+
+.lede {
+  margin: 0 0 40px;
+  max-width: 520px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #9a9e93;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.map {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 39px, rgba(200, 255, 46, 0.09) 39px 40px),
+    repeating-linear-gradient(90deg, transparent 0 39px, rgba(200, 255, 46, 0.09) 39px 40px),
+    #0e1009;
+}
+
+.mapRoadH {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 52%;
+  height: 8px;
+  background: rgba(242, 243, 239, 0.09);
+}
+
+.mapRoadV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 38%;
+  width: 6px;
+  background: rgba(242, 243, 239, 0.07);
+}
+
+.mapPin {
+  position: absolute;
+  left: calc(38% - 5px);
+  top: calc(52% - 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mapDot {
+  width: 16px;
+  height: 16px;
+  background: #c8ff2e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(200, 255, 46, 0.2);
+}
+
+.mapLabel {
+  margin-top: 8px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  background: #c8ff2e;
+  color: #0a0b09;
+  padding: 4px 7px;
+  white-space: nowrap;
+}
+
+.mapCorner {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: #6e7268;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.infoCard {
+  background: #121410;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  padding: 18px;
+}
+
+.infoLabel {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: #7e8278;
+}
+
+.infoValue {
+  margin-top: 9px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.formCard {
+  background: #121410;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  padding: 26px;
+}
+
+.formTitle {
+  margin: 0 0 18px;
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+}
+
+.sentBox {
+  padding: 26px;
+  border: 1px solid rgba(200, 255, 46, 0.35);
+  background: rgba(200, 255, 46, 0.07);
+  border-radius: 3px;
+  animation: ih-pop 0.45s both;
+}
+
+.sentTitle {
+  font-family: var(--font-archivo-black), sans-serif;
+  font-size: 20px;
+  color: #c8ff2e;
+  margin-bottom: 8px;
+}
+
+.sentBody {
+  margin: 0;
+  font-size: 14px;
+  color: #c9ccc2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input {
+  background: #0e1009;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f2f3ef;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 2px;
+  font-family: var(--font-archivo), sans-serif;
+  min-height: 48px;
+}
+
+.textarea {
+  background: #0e1009;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f2f3ef;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 2px;
+  font-family: var(--font-archivo), sans-serif;
+  resize: vertical;
+}
+
+.submitBtn {
+  background: #c8ff2e;
+  color: #0a0b09;
+  border: 0;
+  min-height: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: transform 0.15s;
+}
+
+.submitBtn:hover {
+  transform: scale(1.01);
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+@keyframes ih-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
