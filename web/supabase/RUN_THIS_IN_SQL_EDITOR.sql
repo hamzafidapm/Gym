@@ -198,18 +198,33 @@ create policy "Anyone can send a contact message"
 
 -- ---- migrations/0003_functions_triggers.sql ----
 -- Auto-create a members row whenever someone signs up through Supabase Auth.
+-- Reads first_name/last_name/phone/plan_id/cycle out of the signup metadata
+-- (see supabase.auth.signUp options.data on the join flow) so a member is
+-- fully set up the moment their auth.users row exists, session or not.
+-- plan_id/cycle are validated defensively -- this trigger must never raise,
+-- or the whole signUp() call fails with an opaque error on the client.
 create function public.handle_new_user()
 returns trigger
 language plpgsql
 security definer
 set search_path = public
 as $$
+declare
+  v_plan_id text := new.raw_user_meta_data ->> 'plan_id';
+  v_cycle text := new.raw_user_meta_data ->> 'cycle';
 begin
-  insert into public.members (id, first_name, last_name)
+  if v_plan_id is not null and not exists (select 1 from public.plans where id = v_plan_id) then
+    v_plan_id := null;
+  end if;
+
+  insert into public.members (id, first_name, last_name, phone, plan_id, cycle)
   values (
     new.id,
     new.raw_user_meta_data ->> 'first_name',
-    new.raw_user_meta_data ->> 'last_name'
+    new.raw_user_meta_data ->> 'last_name',
+    new.raw_user_meta_data ->> 'phone',
+    v_plan_id,
+    case when v_cycle = 'annual' then 'annual'::billing_cycle else 'monthly'::billing_cycle end
   );
   return new;
 end;

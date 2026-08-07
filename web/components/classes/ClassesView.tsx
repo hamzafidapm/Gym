@@ -1,10 +1,11 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { CLASSES, DAY_NAMES, DAY_ORDER, TRAINERS } from "@/lib/data";
+import { useState } from "react";
+import { DAY_NAMES, DAY_ORDER, TRAINERS } from "@/lib/data";
 import { enrichClass } from "@/lib/classHelpers";
 import { useAppState } from "@/lib/AppStateContext";
+import { useClasses } from "@/lib/useClasses";
 import ClassModal from "./ClassModal";
 import styles from "./ClassesView.module.css";
 
@@ -16,49 +17,35 @@ export default function ClassesView() {
 
   const [typeFilter, setTypeFilter] = useState(initialType);
   const [trainerFilter, setTrainerFilter] = useState("ALL");
-  const [loading, setLoading] = useState(false);
-  const [modalKey, setModalKey] = useState<string | null>(null);
-  const loadTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [modalClassId, setModalClassId] = useState<string | null>(null);
 
   const { isBooked, book } = useAppState();
+  const { classes, loading, error, refetch } = useClasses();
 
-  useEffect(() => {
-    return () => {
-      if (loadTimer.current) clearTimeout(loadTimer.current);
-    };
-  }, []);
+  const filtered = classes.filter(
+    (c) =>
+      (typeFilter === "ALL" || c.type === typeFilter) &&
+      (trainerFilter === "ALL" || c.trainerId === trainerFilter),
+  );
+  const schedule = DAY_ORDER.map((day) => {
+    const items = filtered
+      .filter((c) => c.day === day)
+      .sort((a, b) => a.time.localeCompare(b.time))
+      .map((c) => enrichClass(c, isBooked));
+    return { day, name: DAY_NAMES[day], items };
+  }).filter((d) => d.items.length > 0);
 
-  const applyFilter = (setter: (v: string) => void, value: string) => {
-    setter(value);
-    setLoading(true);
-    if (loadTimer.current) clearTimeout(loadTimer.current);
-    loadTimer.current = setTimeout(() => setLoading(false), 340);
-  };
+  const modalClassRaw = modalClassId ? classes.find((c) => c.id === modalClassId) : null;
+  const modalClass = modalClassRaw ? enrichClass(modalClassRaw, isBooked) : null;
 
-  const schedule = useMemo(() => {
-    const filtered = CLASSES.filter(
-      (c) =>
-        (typeFilter === "ALL" || c.type === typeFilter) &&
-        (trainerFilter === "ALL" || c.trainerId === trainerFilter),
-    );
-    return DAY_ORDER.map((day) => {
-      const items = filtered
-        .filter((c) => c.day === day)
-        .sort((a, b) => a.time.localeCompare(b.time))
-        .map((c) => enrichClass(c, isBooked));
-      return { day, name: DAY_NAMES[day], items };
-    }).filter((d) => d.items.length > 0);
-  }, [typeFilter, trainerFilter, isBooked]);
-
-  const modalClass = modalKey
-    ? enrichClass(CLASSES.find((c) => c.key === modalKey)!, isBooked)
-    : null;
-
-  const handleBook = (key: string) => {
-    const c = CLASSES.find((x) => x.key === key);
+  const handleBook = async (id: string) => {
+    const c = classes.find((x) => x.id === id);
     if (!c) return;
-    const success = book(c);
-    if (success) setModalKey(null);
+    const success = await book(c);
+    if (success) {
+      setModalClassId(null);
+      refetch();
+    }
   };
 
   return (
@@ -76,7 +63,7 @@ export default function ClassesView() {
             type="button"
             className={styles.chip}
             data-active={typeFilter === t}
-            onClick={() => applyFilter(setTypeFilter, t)}
+            onClick={() => setTypeFilter(t)}
           >
             {t === "ALL" ? "All classes" : t}
           </button>
@@ -87,7 +74,7 @@ export default function ClassesView() {
           type="button"
           className={`${styles.chip} ${styles.chipTrainer}`}
           data-active={trainerFilter === "ALL"}
-          onClick={() => applyFilter(setTrainerFilter, "ALL")}
+          onClick={() => setTrainerFilter("ALL")}
         >
           All coaches
         </button>
@@ -97,7 +84,7 @@ export default function ClassesView() {
             type="button"
             className={`${styles.chip} ${styles.chipTrainer}`}
             data-active={trainerFilter === t.id}
-            onClick={() => applyFilter(setTrainerFilter, t.id)}
+            onClick={() => setTrainerFilter(t.id)}
           >
             {t.name}
           </button>
@@ -110,6 +97,8 @@ export default function ClassesView() {
             <div key={i} className={styles.skeleton} />
           ))}
         </div>
+      ) : error ? (
+        <div className={styles.empty}>Couldn&apos;t load the schedule — {error}</div>
       ) : schedule.length === 0 ? (
         <div className={styles.empty}>No classes match those filters this week.</div>
       ) : (
@@ -122,13 +111,13 @@ export default function ClassesView() {
               </div>
               <div className={styles.items}>
                 {day.items.map((c) => (
-                  <div key={c.key} className={styles.item}>
+                  <div key={c.id} className={styles.item}>
                     <div className={styles.itemTop}>
                       <div>
                         <button
                           type="button"
                           className={styles.itemName}
-                          onClick={() => setModalKey(c.key)}
+                          onClick={() => setModalClassId(c.id)}
                         >
                           {c.name}
                         </button>
@@ -156,7 +145,7 @@ export default function ClassesView() {
                       type="button"
                       className={styles.bookBtn}
                       style={{ background: c.btnBg, color: c.btnFg }}
-                      onClick={() => handleBook(c.key)}
+                      onClick={() => handleBook(c.id)}
                     >
                       {c.btnLabel}
                     </button>
@@ -171,8 +160,8 @@ export default function ClassesView() {
       {modalClass && (
         <ClassModal
           cls={modalClass}
-          onClose={() => setModalKey(null)}
-          onBook={() => handleBook(modalClass.key)}
+          onClose={() => setModalClassId(null)}
+          onBook={() => handleBook(modalClass.id)}
         />
       )}
     </section>

@@ -17,10 +17,10 @@ export interface EnrichedClass extends GymClass {
   btnFg: string;
 }
 
-export function enrichClass(c: GymClass, isBooked: (key: string) => boolean): EnrichedClass {
+export function enrichClass(c: GymClass, isBooked: (classId: string) => boolean): EnrichedClass {
   const trainer = trainerById(c.trainerId);
   const copy = CLASS_COPY[c.type];
-  const booked = isBooked(c.key);
+  const booked = isBooked(c.id);
   const full = c.spots <= 0;
   return {
     ...c,

@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
-import { CLASSES, PLAN_BASE, fmtPrice, planByName, trainerById } from "@/lib/data";
+import { PLAN_BASE, fmtPrice, planByName } from "@/lib/data";
 import { useAppState } from "@/lib/AppStateContext";
+import { useClasses } from "@/lib/useClasses";
 import { ACCENT } from "@/lib/theme";
 import styles from "./JoinView.module.css";
 
@@ -21,24 +22,34 @@ interface FormState {
   first: string;
   last: string;
   email: string;
+  password: string;
   phone: string;
   plan: string;
   firstClass: string | null;
   card: string;
 }
 
+interface DoneState {
+  firstName: string;
+  email: string;
+  message: string;
+}
+
 export default function JoinView() {
   const searchParams = useSearchParams();
   const initialPlan = searchParams.get("plan") || "PREMIUM";
-  const { annual } = useAppState();
+  const { annual, signUp, book } = useAppState();
+  const { classes: liveClasses } = useClasses();
 
   const [step, setStep] = useState(1);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<DoneState | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState<FormState>({
     first: "",
     last: "",
     email: "",
+    password: "",
     phone: "",
     plan: PLAN_BASE.some((p) => p.name === initialPlan) ? initialPlan : "PREMIUM",
     firstClass: null,
@@ -51,13 +62,13 @@ export default function JoinView() {
   };
 
   const firstOpts = useMemo(
-    () => CLASSES.filter((c) => c.spots > 3).slice(0, 4),
-    [],
+    () => liveClasses.filter((c) => c.spots > 3).slice(0, 4),
+    [liveClasses],
   );
-  const chosen = form.firstClass ? CLASSES.find((c) => c.key === form.firstClass) : null;
+  const chosen = form.firstClass ? liveClasses.find((c) => c.id === form.firstClass) : null;
   const planObj = planByName(form.plan);
 
-  const next = () => {
+  const next = async () => {
     if (step === 1) {
       if (!form.first.trim() || !form.last.trim()) {
         setError("We need your first and last name to make a member card.");
@@ -67,10 +78,41 @@ export default function JoinView() {
         setError("That email doesn’t look right.");
         return;
       }
+      if (form.password.length < 8) {
+        setError("Password needs to be at least 8 characters.");
+        return;
+      }
     }
     if (step === 4) {
-      setDone(true);
+      setSubmitting(true);
       setError(null);
+      const result = await signUp({
+        email: form.email,
+        password: form.password,
+        firstName: form.first,
+        lastName: form.last,
+        phone: form.phone,
+        planId: form.plan,
+        cycle: annual ? "annual" : "monthly",
+      });
+      setSubmitting(false);
+
+      if (result.error) {
+        setError(result.error);
+        return;
+      }
+
+      let message = "Your 7-day trial starts now.";
+      if (result.needsEmailConfirmation) {
+        message = `Confirm your account from the email we just sent to ${form.email}, then sign in to book your first class.`;
+      } else if (chosen) {
+        const booked = await book(chosen);
+        message = booked
+          ? `See you at ${chosen.name}, ${chosen.day} ${chosen.time}.`
+          : "Your 7-day trial starts now — that first pick filled up, grab another from the schedule.";
+      }
+
+      setDone({ firstName: (form.first || "Athlete").toUpperCase(), email: form.email, message });
       try {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch {}
@@ -86,10 +128,6 @@ export default function JoinView() {
   };
 
   if (done) {
-    const firstName = (form.first || "Athlete").toUpperCase();
-    const confirmLine = chosen
-      ? `See you at ${chosen.name}, ${chosen.day} ${chosen.time}.`
-      : "Your 7-day trial starts now.";
     return (
       <section className={styles.section}>
         <div className={styles.doneWrap}>
@@ -97,11 +135,8 @@ export default function JoinView() {
             <span className={styles.ring} />
             <span className={styles.check}>✓</span>
           </div>
-          <h1 className={styles.doneTitle}>YOU&apos;RE IN, {firstName}.</h1>
-          <p className={styles.doneLede}>
-            {confirmLine} Confirmation sent to {form.email}. Bring shoes you can lift
-            in.
-          </p>
+          <h1 className={styles.doneTitle}>YOU&apos;RE IN, {done.firstName}.</h1>
+          <p className={styles.doneLede}>{done.message}</p>
           <div className={styles.doneActions}>
             <Link href="/dashboard" className={styles.doneBtnPrimary}>
               Go to dashboard
@@ -117,6 +152,8 @@ export default function JoinView() {
 
   const emailBorder =
     error && error.toLowerCase().includes("email") ? "#FF6B3D" : "rgba(255,255,255,.14)";
+  const passwordBorder =
+    error && error.toLowerCase().includes("password") ? "#FF6B3D" : "rgba(255,255,255,.14)";
 
   return (
     <section className={styles.section}>
@@ -165,6 +202,7 @@ export default function JoinView() {
                 value={form.email}
                 onChange={update("email")}
                 placeholder="you@email.com"
+                type="email"
               />
             </label>
             <label className={styles.field}>
@@ -174,6 +212,17 @@ export default function JoinView() {
                 value={form.phone}
                 onChange={update("phone")}
                 placeholder="(512) 555-0148"
+              />
+            </label>
+            <label className={styles.field}>
+              Password
+              <input
+                className={styles.input}
+                style={{ borderColor: passwordBorder }}
+                value={form.password}
+                onChange={update("password")}
+                placeholder="At least 8 characters"
+                type="password"
               />
             </label>
           </div>
@@ -226,10 +275,10 @@ export default function JoinView() {
           </p>
           <div className={styles.classGrid}>
             {firstOpts.map((c) => {
-              const sel = form.firstClass === c.key;
+              const sel = form.firstClass === c.id;
               return (
                 <button
-                  key={c.key}
+                  key={c.id}
                   type="button"
                   className={styles.classOption}
                   style={{
@@ -239,7 +288,7 @@ export default function JoinView() {
                   onClick={() =>
                     setForm((f) => ({
                       ...f,
-                      firstClass: f.firstClass === c.key ? null : c.key,
+                      firstClass: f.firstClass === c.id ? null : c.id,
                     }))
                   }
                 >
@@ -250,7 +299,7 @@ export default function JoinView() {
                     {c.name}
                   </div>
                   <div className={styles.classOptionMeta}>
-                    {c.day} · {c.time} · {trainerById(c.trainerId)?.name}
+                    {c.day} · {c.time}
                   </div>
                 </button>
               );
@@ -320,12 +369,18 @@ export default function JoinView() {
 
       <div className={styles.navRow}>
         {step > 1 && (
-          <button type="button" className={styles.backBtn} onClick={back}>
+          <button type="button" className={styles.backBtn} onClick={back} disabled={submitting}>
             ← Back
           </button>
         )}
-        <button type="button" className={styles.nextBtn} onClick={next}>
-          {step === 4 ? "Start my free trial" : "Continue →"}
+        <button
+          type="button"
+          className={styles.nextBtn}
+          onClick={next}
+          disabled={submitting}
+          style={submitting ? { opacity: 0.7, cursor: "default" } : undefined}
+        >
+          {submitting ? "Creating your account…" : step === 4 ? "Start my free trial" : "Continue →"}
         </button>
       </div>
     </section>

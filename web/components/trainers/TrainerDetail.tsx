@@ -2,17 +2,25 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { CLASSES } from "@/lib/data";
 import { enrichClass } from "@/lib/classHelpers";
 import { useAppState } from "@/lib/AppStateContext";
+import { useClasses } from "@/lib/useClasses";
 import type { Trainer } from "@/lib/types";
 import styles from "./TrainerDetail.module.css";
 
 export default function TrainerDetail({ trainer }: { trainer: Trainer }) {
   const { isBooked, book } = useAppState();
-  const classes = CLASSES.filter((c) => c.trainerId === trainer.id).map((c) =>
-    enrichClass(c, isBooked),
-  );
+  const { classes: allClasses, loading, refetch } = useClasses();
+  const classes = allClasses
+    .filter((c) => c.trainerId === trainer.id)
+    .map((c) => enrichClass(c, isBooked));
+
+  const handleBook = async (id: string) => {
+    const c = allClasses.find((x) => x.id === id);
+    if (!c) return;
+    const success = await book(c);
+    if (success) refetch();
+  };
 
   return (
     <section className={styles.section}>
@@ -37,11 +45,12 @@ export default function TrainerDetail({ trainer }: { trainer: Trainer }) {
           <p className={styles.certs}>Certifications — {trainer.certs}</p>
           <h2 className={styles.h2}>THIS WEEK WITH {trainer.first}</h2>
           <div className={styles.classList}>
-            {classes.length === 0 && (
+            {loading && <p className={styles.empty}>Loading this week&apos;s classes…</p>}
+            {!loading && classes.length === 0 && (
               <p className={styles.empty}>No classes on the board this week.</p>
             )}
             {classes.map((c) => (
-              <div key={c.key} className={styles.classRow}>
+              <div key={c.id} className={styles.classRow}>
                 <div>
                   <div className={styles.classInfo}>{c.name}</div>
                   <div className={styles.classMeta}>
@@ -52,7 +61,7 @@ export default function TrainerDetail({ trainer }: { trainer: Trainer }) {
                   type="button"
                   className={styles.bookBtn}
                   style={{ background: c.btnBg, color: c.btnFg }}
-                  onClick={() => book(c)}
+                  onClick={() => handleBook(c.id)}
                 >
                   {c.btnLabel}
                 </button>

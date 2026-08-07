@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAppState } from "@/lib/AppStateContext";
+import { sendContactMessage } from "@/lib/supabase/queries";
 import styles from "./ContactView.module.css";
 
 const CONTACT_INFO = [
@@ -13,12 +14,26 @@ const CONTACT_INFO = [
 
 export default function ContactView() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const { flash } = useAppState();
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    flash("Message sent — we reply within a day.");
+    setSubmitting(true);
+    setError(null);
+    try {
+      await sendContactMessage({ name, email, message });
+      setSent(true);
+      flash("Message sent — we reply within a day.");
+    } catch {
+      setError("Couldn't send that — try again in a moment.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -64,21 +79,32 @@ export default function ContactView() {
             </div>
           ) : (
             <form className={styles.form} onSubmit={submit}>
-              <input className={styles.input} placeholder="Name" required />
+              <input
+                className={styles.input}
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
               <input
                 className={styles.input}
                 type="email"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
               <textarea
                 className={styles.textarea}
                 placeholder="What do you want to work on?"
                 rows={5}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 required
               />
-              <button type="submit" className={styles.submitBtn}>
-                Send message
+              {error && <p style={{ margin: 0, fontSize: 13.5, color: "#FF6B3D" }}>{error}</p>}
+              <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                {submitting ? "Sending…" : "Send message"}
               </button>
             </form>
           )}

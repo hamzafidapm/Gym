@@ -354,6 +354,99 @@
   transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+.signOutBtn {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f2f3ef;
+  min-height: 48px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.signOutBtn:hover {
+  border-color: #c8ff2e;
+  color: #c8ff2e;
+}
+
+.headActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.signInWrap {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+  padding: clamp(40px, 8vw, 80px) 0;
+}
+
+.signInCard {
+  text-align: left;
+  background: #121410;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 3px;
+  padding: 28px;
+  margin-top: 26px;
+}
+
+.signInForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7e8278;
+}
+
+.input {
+  background: #0e1009;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f2f3ef;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 2px;
+  font-family: var(--font-archivo), sans-serif;
+  min-height: 48px;
+}
+
+.submitBtn {
+  background: #c8ff2e;
+  color: #0a0b09;
+  border: 0;
+  min-height: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.signInError {
+  margin: 0;
+  font-size: 13.5px;
+  color: #ff6b3d;
+}
+
+.switchAuth {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  color: #9a9e93;
+}
+
 @keyframes ih-rise {
   from {
     opacity: 0;

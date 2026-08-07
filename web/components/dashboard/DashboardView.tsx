@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useAppState } from "@/lib/AppStateContext";
+import { fmtPrice, planByName } from "@/lib/data";
 import { ACCENT } from "@/lib/theme";
 import styles from "./DashboardView.module.css";
 
@@ -19,8 +21,89 @@ const PROGRESS = [
   { label: "Mobility re-test", val: "Week 6 of 8", pct: "75%" },
 ];
 
+function memberSinceLabel(isoDate: string): string {
+  const d = new Date(isoDate + "T00:00:00");
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase();
+}
+
+function SignInGate() {
+  const { signInWithPassword } = useAppState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    const result = await signInWithPassword(email, password);
+    setSubmitting(false);
+    if (result.error) setError(result.error);
+  };
+
+  return (
+    <section className={styles.section}>
+      <div className={styles.signInWrap}>
+        <p className={styles.eyebrow}>MY ACCOUNT</p>
+        <h1 className={styles.h1}>SIGN IN.</h1>
+        <div className={styles.signInCard}>
+          <form className={styles.signInForm} onSubmit={submit}>
+            <label className={styles.field}>
+              Email
+              <input
+                className={styles.input}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                required
+              />
+            </label>
+            <label className={styles.field}>
+              Password
+              <input
+                className={styles.input}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Your password"
+                required
+              />
+            </label>
+            {error && <p className={styles.signInError}>{error}</p>}
+            <button type="submit" className={styles.submitBtn} disabled={submitting}>
+              {submitting ? "Signing in…" : "Sign in"}
+            </button>
+          </form>
+          <p className={styles.switchAuth}>
+            Not a member yet?{" "}
+            <Link href="/join" style={{ color: ACCENT }}>
+              Start your free trial
+            </Link>
+            .
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function DashboardView() {
-  const { bookings, cancel, flash } = useAppState();
+  const { user, member, authLoading, bookings, cancel, flash, signOut, annual } = useAppState();
+
+  if (authLoading) {
+    return <section className={styles.section} />;
+  }
+
+  if (!user) {
+    return <SignInGate />;
+  }
+
+  const firstName = (member?.first_name || "Athlete").toUpperCase();
+  const plan = member?.plan_id ? planByName(member.plan_id) : null;
+  const cycle = member?.cycle ?? (annual ? "annual" : "monthly");
 
   const dashStats = [
     { label: "WORKOUTS THIS BLOCK", value: "23", color: ACCENT, note: "of 32 programmed" },
@@ -38,12 +121,19 @@ export default function DashboardView() {
     <section className={styles.section}>
       <div className={styles.head}>
         <div>
-          <p className={styles.eyebrow}>MEMBER SINCE MAR 2024</p>
-          <h1 className={styles.h1}>HELLO, PRIYA.</h1>
+          <p className={styles.eyebrow}>
+            {member ? `MEMBER SINCE ${memberSinceLabel(member.member_since)}` : "MEMBER"}
+          </p>
+          <h1 className={styles.h1}>HELLO, {firstName}.</h1>
         </div>
-        <Link href="/classes" className={styles.bookBtn}>
-          Book a class
-        </Link>
+        <div className={styles.headActions}>
+          <Link href="/classes" className={styles.bookBtn}>
+            Book a class
+          </Link>
+          <button type="button" className={styles.signOutBtn} onClick={() => signOut()}>
+            Sign out
+          </button>
+        </div>
       </div>
 
       <div className={styles.statsGrid}>
@@ -64,7 +154,7 @@ export default function DashboardView() {
           {bookings.length > 0 ? (
             <div className={styles.bookingList}>
               {bookings.map((b) => (
-                <div key={b.key} className={styles.bookingCard}>
+                <div key={b.id} className={styles.bookingCard}>
                   <div className={styles.bookingTop}>
                     <span className={styles.bookingName}>{b.name}</span>
                     <span className={styles.bookingTime}>
@@ -85,7 +175,7 @@ export default function DashboardView() {
                     <button
                       type="button"
                       className={styles.cancelBtn}
-                      onClick={() => cancel(b.key)}
+                      onClick={() => cancel(b.id)}
                     >
                       Cancel
                     </button>
@@ -119,8 +209,12 @@ export default function DashboardView() {
           <h2 className={styles.h2}>MEMBERSHIP</h2>
           <div className={styles.membershipCard}>
             <div className={styles.membershipLabel}>CURRENT PLAN</div>
-            <div className={styles.membershipPlan}>PREMIUM</div>
-            <div className={styles.membershipRenew}>Renews 14 Sep 2026 · $79/mo</div>
+            <div className={styles.membershipPlan}>{plan ? plan.name : "NO PLAN"}</div>
+            <div className={styles.membershipRenew}>
+              {plan
+                ? `${fmtPrice(plan.monthly, cycle === "annual")}${cycle === "annual" ? "/yr" : "/mo"}`
+                : "Pick a plan to get started"}
+            </div>
             <div className={styles.membershipActions}>
               <Link href="/pricing" className={styles.changePlanBtn}>
                 Change plan

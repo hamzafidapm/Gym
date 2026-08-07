@@ -1,13 +1,4 @@
-import type {
-  ClassType,
-  Day,
-  GymClass,
-  Level,
-  Plan,
-  Testimonial,
-  Trainer,
-  TrainerId,
-} from "./types";
+import type { ClassType, Day, Level, Plan, Testimonial, Trainer, TrainerId } from "./types";
 
 export const IMG = {
   strength: "/img/strength.png",
@@ -101,58 +92,10 @@ export const LEVEL_COLOR: Record<Level | "ALL", string> = {
   L3: "#FF6B3D",
 };
 
-type RawClass = [
-  string,
-  ClassType,
-  Day,
-  string,
-  number,
-  TrainerId,
-  number,
-  Level,
-  string,
-];
-
-const RAW: RawClass[] = [
-  ["Heavy Metal", "Strength", "Mon", "06:00", 60, "mara", 4, "L2", "A"],
-  ["Engine Room", "HIIT", "Mon", "12:15", 45, "cole", 9, "L2", "B"],
-  ["Mobility Reset", "Mobility", "Mon", "18:30", 45, "iris", 12, "L1", "C"],
-  ["Bag Work 101", "Boxing", "Mon", "19:30", 60, "dez", 6, "L1", "B"],
-  ["Squat Club", "Strength", "Tue", "06:30", 75, "mara", 2, "L3", "A"],
-  ["Threshold Ride", "Cycle", "Tue", "07:00", 45, "nia", 5, "L2", "D"],
-  ["Slow Flow", "Yoga", "Tue", "17:30", 60, "iris", 14, "L1", "C"],
-  ["Metcon 34", "HIIT", "Tue", "18:45", 35, "cole", 0, "L3", "B"],
-  ["Press Day", "Strength", "Wed", "06:00", 60, "mara", 7, "L2", "A"],
-  ["Sparring Skills", "Boxing", "Wed", "12:00", 60, "dez", 3, "L2", "B"],
-  ["Power Hour", "Cycle", "Wed", "18:00", 60, "nia", 8, "L2", "D"],
-  ["Yin & Breath", "Yoga", "Wed", "20:00", 60, "iris", 11, "L1", "C"],
-  ["Pull Day", "Strength", "Thu", "06:30", 60, "mara", 6, "L2", "A"],
-  ["Engine Room", "HIIT", "Thu", "12:15", 45, "cole", 4, "L2", "B"],
-  ["Footwork Lab", "Boxing", "Thu", "18:30", 45, "dez", 9, "L1", "B"],
-  ["Deep Mobility", "Mobility", "Thu", "19:30", 45, "iris", 13, "L1", "C"],
-  ["Total Body", "Strength", "Fri", "06:00", 60, "mara", 5, "L1", "A"],
-  ["Sprint Night", "Cycle", "Fri", "17:30", 45, "nia", 1, "L3", "D"],
-  ["Fight Fit", "Boxing", "Fri", "18:30", 60, "dez", 7, "L2", "B"],
-  ["Saturday Grind", "HIIT", "Sat", "09:00", 60, "cole", 10, "L2", "B"],
-  ["Barbell Basics", "Strength", "Sat", "10:30", 75, "mara", 8, "L1", "A"],
-  ["Long Ride", "Cycle", "Sat", "08:00", 75, "nia", 6, "L2", "D"],
-  ["Recovery Flow", "Yoga", "Sun", "09:30", 60, "iris", 15, "L1", "C"],
-  ["Sunday Reset", "Mobility", "Sun", "11:00", 45, "tomas", 12, "L1", "C"],
-];
-
-export const CLASSES: GymClass[] = RAW.map((r, i) => ({
-  key: "c" + i,
-  name: r[0],
-  type: r[1],
-  day: r[2],
-  time: r[3],
-  durMin: r[4],
-  trainerId: r[5],
-  spots: r[6],
-  level: r[7],
-  room: r[8],
-}));
-
+// Class *instances* (specific day/time/trainer/spots rows) live in Supabase
+// now -- see lib/supabase/queries.ts -- since spots_available is real,
+// mutable state tied to real bookings. This copy, keyed by class type, is
+// still static editorial content shown in the class detail modal.
 export const CLASS_COPY: Record<ClassType, { desc: string; bring: string }> = {
   Strength: {
     desc: "Barbell work in an 8-week block. Squat, press or pull as the main lift, then two accessories and a finisher. Loads come off your logbook, not a whiteboard guess.",
