@@ -1,6 +1,11 @@
 "use client";
 
-import type { User } from "@supabase/supabase-js";
+import {
+  SessionProvider,
+  signIn as clientSignIn,
+  signOut as clientSignOut,
+  useSession,
+} from "next-auth/react";
 import {
   createContext,
   useCallback,
@@ -10,64 +15,29 @@ import {
   useRef,
   useState,
 } from "react";
-import { supabase } from "./supabase/client";
-import type { Database } from "./supabase/types";
-import type { Booking, Day, GymClass } from "./types";
+import { getMe, signUpAction, type MeResult, type SignUpInput } from "@/app/actions/auth";
+import { bookClass, cancelBooking, getMyBookings, type BookingResult } from "@/app/actions/classes";
+import type { Booking, GymClass } from "./types";
 
-type MemberRow = Database["public"]["Tables"]["members"]["Row"];
-
-function friendlyAuthError(message: string): string {
-  return /failed to fetch|networkerror|load failed/i.test(message)
-    ? "Couldn't reach the server — check your connection and try again."
-    : message;
-}
-
-interface RawBookingRow {
-  id: string;
-  class_id: string;
-  classes: {
-    name: string;
-    day: string;
-    start_time: string;
-    duration_min: number;
-    room: string;
-    trainers: { name: string } | null;
-  } | null;
-}
-
-function mapBookings(rows: RawBookingRow[] | null | undefined): Booking[] {
-  return (rows ?? [])
-    .filter((r): r is RawBookingRow & { classes: NonNullable<RawBookingRow["classes"]> } =>
-      Boolean(r.classes),
-    )
-    .map((r) => ({
-      id: r.id,
-      classId: r.class_id,
-      name: r.classes.name,
-      day: r.classes.day as Day,
-      time: r.classes.start_time.slice(0, 5),
-      dur: r.classes.duration_min + " min",
-      trainer: r.classes.trainers?.name ?? "",
-      room: r.classes.room,
-    }));
-}
-
-interface SignUpInput {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  planId: string;
-  cycle: "monthly" | "annual";
+function toBooking(b: BookingResult): Booking {
+  return {
+    id: b.id,
+    classId: b.classId,
+    name: b.name,
+    day: b.day as Booking["day"],
+    time: b.time,
+    dur: b.dur,
+    trainerId: b.trainerId,
+    room: b.room,
+  };
 }
 
 interface AppState {
   // auth / session
-  user: User | null;
-  member: MemberRow | null;
+  authenticated: boolean;
+  member: MeResult | null;
   authLoading: boolean;
-  signUp: (input: SignUpInput) => Promise<{ error?: string; needsEmailConfirmation: boolean }>;
+  signUp: (input: SignUpInput) => Promise<{ error?: string }>;
   signInWithPassword: (email: string, password: string) => Promise<{ error?: string }>;
   signOut: () => Promise<void>;
 
@@ -89,10 +59,12 @@ interface AppState {
 
 const AppStateCtx = createContext<AppState | null>(null);
 
-export function AppStateProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [member, setMember] = useState<MemberRow | null>(null);
+function AppStateInner({ children }: { children: React.ReactNode }) {
+  const { status } = useSession();
+  const authenticated = status === "authenticated";
+  const authLoading = status === "loading";
+
+  const [member, setMember] = useState<MeResult | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
   const [annual, setAnnual] = useState(false);
@@ -105,45 +77,31 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     toastTimer.current = setTimeout(() => setToast(null), 2600);
   }, []);
 
-  const refreshMemberAndBookings = useCallback(async (uid: string) => {
+  const refreshMemberAndBookings = useCallback(async () => {
     setBookingsLoading(true);
-    const [memberRes, bookingsRes] = await Promise.all([
-      supabase.from("members").select("*").eq("id", uid).single(),
-      supabase
-        .from("bookings")
-        .select(
-          "id, class_id, classes(name, day, start_time, duration_min, room, trainers(name))",
-        )
-        .eq("member_id", uid)
-        .eq("status", "booked"),
-    ]);
-    setMember((memberRes.data as MemberRow | null) ?? null);
-    setBookings(mapBookings(bookingsRes.data as unknown as RawBookingRow[] | null));
-    setBookingsLoading(false);
+    try {
+      const [me, myBookings] = await Promise.all([getMe(), getMyBookings()]);
+      setMember(me);
+      setBookings(myBookings.map(toBooking));
+    } catch {
+      // getMe/getMyBookings already degrade to null/[] on failure -- this is
+      // just a safety net so a stuck loading state is never possible here.
+    } finally {
+      setBookingsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setAuthLoading(false);
-    });
-    // onAuthStateChange fires once immediately with the current session on
-    // subscribe, then again on every sign-in/out -- so member/booking
-    // refresh lives here (a subscription callback) rather than in a
-    // separate effect keyed on `user`, keeping every setState call here
-    // inside a callback instead of an effect body's synchronous top level.
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setAuthLoading(false);
-      if (session?.user) {
-        refreshMemberAndBookings(session.user.id);
-      } else {
-        setMember(null);
-        setBookings([]);
-      }
-    });
-    return () => sub.subscription.unsubscribe();
-  }, [refreshMemberAndBookings]);
+    // Reacting to next-auth's session status, not a subscription we control
+    // the callback shape of -- same one-shot-sync pattern as useClasses.
+    if (authenticated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      refreshMemberAndBookings();
+    } else if (status === "unauthenticated") {
+      setMember(null);
+      setBookings([]);
+    }
+  }, [authenticated, status, refreshMemberAndBookings]);
 
   const isBooked = useCallback(
     (classId: string) => bookings.some((b) => b.classId === classId),
@@ -152,81 +110,70 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
 
   const book = useCallback(
     async (c: GymClass): Promise<boolean> => {
-      if (!user) {
+      if (!authenticated) {
         flash("Sign in or join to book a class.");
-        return false;
-      }
-      if (c.spots <= 0) {
-        flash("That session is full — join the waitlist at the desk.");
         return false;
       }
       if (isBooked(c.id)) {
         flash("Already on your schedule.");
         return false;
       }
-      const { error } = await supabase.rpc("book_class", { p_class_id: c.id });
+      const { error } = await bookClass(c.id);
       if (error) {
         flash(
-          error.message.includes("full")
+          error === "Class is full"
             ? "That session is full — join the waitlist at the desk."
-            : error.message.includes("Already booked")
+            : error === "Already booked"
               ? "Already on your schedule."
               : "Could not book that class.",
         );
         return false;
       }
       flash("Booked — " + c.name + ", " + c.day + " " + c.time);
-      await refreshMemberAndBookings(user.id);
+      await refreshMemberAndBookings();
       return true;
     },
-    [user, isBooked, flash, refreshMemberAndBookings],
+    [authenticated, isBooked, flash, refreshMemberAndBookings],
   );
 
   const cancel = useCallback(
     async (bookingId: string) => {
-      if (!user) return;
-      const { error } = await supabase.rpc("cancel_booking", { p_booking_id: bookingId });
+      const { error } = await cancelBooking(bookingId);
       if (error) {
         flash("Could not cancel that class.");
         return;
       }
       flash("Class cancelled. No charge.");
-      await refreshMemberAndBookings(user.id);
+      await refreshMemberAndBookings();
     },
-    [user, flash, refreshMemberAndBookings],
+    [flash, refreshMemberAndBookings],
   );
 
   const signUp = useCallback(async (input: SignUpInput) => {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await signUpAction(input);
+    if (error) return { error };
+    const result = await clientSignIn("credentials", {
       email: input.email,
       password: input.password,
-      options: {
-        data: {
-          first_name: input.firstName,
-          last_name: input.lastName,
-          phone: input.phone,
-          plan_id: input.planId,
-          cycle: input.cycle,
-        },
-      },
+      redirect: false,
     });
-    if (error) return { error: friendlyAuthError(error.message), needsEmailConfirmation: false };
-    return { needsEmailConfirmation: !data.session };
+    if (result?.error) return { error: "Account created — sign in from My Account." };
+    return {};
   }, []);
 
   const signInWithPassword = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return { error: friendlyAuthError(error.message) };
+    const result = await clientSignIn("credentials", { email, password, redirect: false });
+    if (result?.error) return { error: "That email/password combination doesn't match." };
     return {};
   }, []);
 
   const signOut = useCallback(async () => {
-    await supabase.auth.signOut();
+    await clientSignOut({ redirect: false });
   }, []);
 
-  const value = useMemo(
+  const value = useMemo<AppState>(
     () => ({
-      user,
+      authenticated,
       member,
       authLoading,
       signUp,
@@ -243,7 +190,7 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
       flash,
     }),
     [
-      user,
+      authenticated,
       member,
       authLoading,
       signUp,
@@ -261,6 +208,14 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
   );
 
   return <AppStateCtx.Provider value={value}>{children}</AppStateCtx.Provider>;
+}
+
+export function AppStateProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <SessionProvider>
+      <AppStateInner>{children}</AppStateInner>
+    </SessionProvider>
+  );
 }
 
 export function useAppState(): AppState {

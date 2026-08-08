@@ -103,9 +103,7 @@ export default function JoinView() {
       }
 
       let message = "Your 7-day trial starts now.";
-      if (result.needsEmailConfirmation) {
-        message = `Confirm your account from the email we just sent to ${form.email}, then sign in to book your first class.`;
-      } else if (chosen) {
+      if (chosen) {
         const booked = await book(chosen);
         message = booked
           ? `See you at ${chosen.name}, ${chosen.day} ${chosen.time}.`

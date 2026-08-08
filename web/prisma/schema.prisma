@@ -1,0 +1,73 @@
+// IRONHAUS schema (Neon Postgres via Prisma).
+//
+// Trainer bios, class-type copy, plan pricing, testimonials and gallery stay
+// static in lib/data.ts -- editorial content with no functional need to be
+// live. Only what real users actually change lives here: accounts, real
+// bookable class instances (spotsAvailable is live), bookings, and contact
+// submissions. trainerId/type/planId are plain strings matched against the
+// static lists in lib/data.ts, not foreign keys -- there's no trainers/plans
+// table in this database.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  phone        String?
+  planId       String? // 'BASIC' | 'PREMIUM' | 'ELITE' -- matches lib/data.ts PLAN_BASE ids
+  cycle        String   @default("monthly") // 'monthly' | 'annual'
+  memberSince  DateTime @default(now())
+  createdAt    DateTime @default(now())
+  bookings     Booking[]
+}
+
+model GymClass {
+  id             String    @id @default(cuid())
+  name           String
+  type           String // ClassType -- matches lib/data.ts CLASS_COPY keys
+  day            String // 'Mon'..'Sun'
+  startTime      String // "HH:MM", 24h, zero-padded (sorts correctly as text)
+  durationMin    Int
+  trainerId      String // matches lib/data.ts TRAINERS ids
+  spotsAvailable Int
+  level          String // 'L1' | 'L2' | 'L3'
+  room           String
+  bookings       Booking[]
+
+  @@index([day])
+  @@index([type])
+}
+
+// A booking is just membership in this join table -- book creates the row,
+// cancel deletes it. No status/history tracking; the dashboard's "history"
+// section is separate static demo content, not fed by real cancellations.
+model Booking {
+  id       String   @id @default(cuid())
+  userId   String
+  classId  String
+  bookedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gymClass GymClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, classId])
+  @@index([userId])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

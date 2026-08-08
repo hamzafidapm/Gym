@@ -1,4 +1,13 @@
-# Supabase
+# Supabase (superseded)
+
+**This backend was replaced with Neon Postgres + Prisma.** See `../prisma/`
+for the current schema and `../PRISMA.md` for setup. This folder is kept
+only as historical reference — the Supabase project itself
+(`https://pidjxjmlwdzgjbdnyjma.supabase.co`) still exists with its schema
+applied and seeded, in case it's ever useful to look back at, but nothing in
+the app reads from it anymore.
+
+---
 
 Schema for the IRONHAUS project (`https://pidjxjmlwdzgjbdnyjma.supabase.co`).
 
@@ -29,50 +38,23 @@ access to this project:
   `members` row on signup
 - `seed.sql` — content seed data
 
-## Frontend wiring
+## What this used to wire up
 
 Auth, members, bookings, live class instances (real seat counts), and the
-contact form are wired to this schema (see `lib/AppStateContext.tsx` and
-`lib/supabase/queries.ts`). Trainer bios, class-type copy, testimonials, the
-gallery, and plan marketing copy stay static in `lib/data.ts` —
-editorial content with no functional need to be live. `trainers`,
-`class_categories`, `plans`, `testimonials`, `gallery_items` are seeded and
-kept in sync by hand for now; they exist mainly so a future CMS-style edit
-flow has somewhere to write to. Only `classes.spots_available` and
-`bookings` actually change through user actions, which is why those two are
-the ones wired live.
+contact form were wired to this schema. Trainer bios, class-type copy,
+testimonials, the gallery, and plan marketing copy stayed static in
+`lib/data.ts` — that scope boundary (editorial content static, only real
+user-driven state live) carried over unchanged to the Prisma version.
 
-Auth is email + password (`supabase.auth.signUp` / `signInWithPassword`). If
-this project has "Confirm email" enabled (Authentication → Providers → Email
-in the dashboard — on by default for new projects), `signUp()` won't return
-an active session until the user clicks the confirmation link, so the join
-flow's success screen adapts its copy for that case instead of assuming
-immediate dashboard access.
+Auth was email + password via Supabase Auth (`supabase.auth.signUp` /
+`signInWithPassword`). The Prisma version replaced this with NextAuth
+(Auth.js) Credentials provider + bcrypt, since Neon is just a database with
+no built-in auth.
 
-## Regenerating types
+## Not runtime-verified
 
-`lib/supabase/types.ts` is hand-written to match this schema, but
-`lib/supabase/client.ts` does **not** pass it as `createClient<Database>`
-— the hand-written shape didn't line up cleanly with this supabase-js
-version's generic constraints across `.rpc()` / `.insert()` overloads, so
-call sites (`queries.ts`, `AppStateContext.tsx`) cast row shapes explicitly
-instead. Once the CLI can reach this project, regenerate real types and
-re-wire the generic:
-
-```
-npx supabase gen types typescript --project-id pidjxjmlwdzgjbdnyjma > lib/supabase/types.ts
-```
-
-## Not yet runtime-verified
-
-The frontend wiring above was written and typechecked/built (`tsc`, `eslint`,
-`next build`) but never actually exercised against this Supabase project —
-the sandbox that built it can't reach `supabase.co` at all (not a
-credentials issue, an egress allowlist one). What *was* verified in a
-browser from that sandbox: every page renders without crashing, and every
-Supabase-dependent page (classes, join, dashboard, contact) degrades
-gracefully into a visible error/retry state when the network call fails,
-rather than hanging or throwing. What's untested: an actual successful
-signup, booking, cancellation, or contact submission end to end. Test those
-once this is deployed somewhere with real network access, and report back
-anything that doesn't work as expected.
+This was written and typechecked/built but never actually exercised against
+this Supabase project before the switch to Neon — the sandbox that built it
+couldn't reach `supabase.co` at all. What *was* verified in a browser: every
+page rendered without crashing, and every Supabase-dependent page degraded
+gracefully into a visible error/retry state when the network call failed.

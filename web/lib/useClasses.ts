@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getClasses } from "./supabase/queries";
+import { getClasses } from "@/app/actions/classes";
 import type { GymClass } from "./types";
 
 export function useClasses() {
@@ -12,15 +12,10 @@ export function useClasses() {
   const fetchClasses = useCallback(async () => {
     try {
       const data = await getClasses();
-      setClasses(data);
+      setClasses(data as GymClass[]);
       setError(null);
     } catch (e) {
-      const message = e instanceof Error ? e.message : "Failed to load classes";
-      setError(
-        /failed to fetch|networkerror|load failed/i.test(message)
-          ? "Couldn't reach the server — check your connection and try again."
-          : message,
-      );
+      setError(e instanceof Error ? e.message : "Failed to load classes");
     } finally {
       setLoading(false);
     }

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAppState } from "@/lib/AppStateContext";
-import { sendContactMessage } from "@/lib/supabase/queries";
+import { submitContactMessage } from "@/app/actions/contact";
 import styles from "./ContactView.module.css";
 
 const CONTACT_INFO = [
@@ -25,15 +25,14 @@ export default function ContactView() {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
-    try {
-      await sendContactMessage({ name, email, message });
+    const result = await submitContactMessage({ name, email, message });
+    if (result.error) {
+      setError(result.error);
+    } else {
       setSent(true);
       flash("Message sent — we reply within a day.");
-    } catch {
-      setError("Couldn't send that — try again in a moment.");
-    } finally {
-      setSubmitting(false);
     }
+    setSubmitting(false);
   };
 
   return (

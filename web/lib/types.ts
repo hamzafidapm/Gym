@@ -23,8 +23,8 @@ export type Level = "L1" | "L2" | "L3";
 
 export type Day = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
 
-// Class instances are live (Supabase `classes` table) since spots_available
-// is real mutable state. `id` is the row's uuid, not the old static index key.
+// Class instances are live (GymClass table, via app/actions/classes.ts)
+// since spots_available is real mutable state.
 export interface GymClass {
   id: string;
   name: string;
@@ -52,7 +52,9 @@ export interface Testimonial {
   meta: string;
 }
 
-// A signed-in member's booking, joined from `bookings` + `classes` + `trainers`.
+// A signed-in member's booking, joined from Booking + GymClass in the DB.
+// trainerId resolves to a display name via trainerById() (lib/data.ts) --
+// trainers are static content, not part of this database.
 export interface Booking {
   id: string;
   classId: string;
@@ -60,6 +62,6 @@ export interface Booking {
   day: Day;
   time: string;
   dur: string;
-  trainer: string;
+  trainerId: string;
   room: string;
 }

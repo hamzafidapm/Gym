@@ -92,10 +92,10 @@ export const LEVEL_COLOR: Record<Level | "ALL", string> = {
   L3: "#FF6B3D",
 };
 
-// Class *instances* (specific day/time/trainer/spots rows) live in Supabase
-// now -- see lib/supabase/queries.ts -- since spots_available is real,
-// mutable state tied to real bookings. This copy, keyed by class type, is
-// still static editorial content shown in the class detail modal.
+// Class *instances* (specific day/time/trainer/spots rows) live in the
+// database now -- see app/actions/classes.ts -- since spots_available is
+// real, mutable state tied to real bookings. This copy, keyed by class type,
+// is still static editorial content shown in the class detail modal.
 export const CLASS_COPY: Record<ClassType, { desc: string; bring: string }> = {
   Strength: {
     desc: "Barbell work in an 8-week block. Squat, press or pull as the main lift, then two accessories and a finisher. Loads come off your logbook, not a whiteboard guess.",

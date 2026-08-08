@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAppState } from "@/lib/AppStateContext";
-import { fmtPrice, planByName } from "@/lib/data";
+import { fmtPrice, planByName, trainerById } from "@/lib/data";
 import { ACCENT } from "@/lib/theme";
 import styles from "./DashboardView.module.css";
 
@@ -21,10 +21,8 @@ const PROGRESS = [
   { label: "Mobility re-test", val: "Week 6 of 8", pct: "75%" },
 ];
 
-function memberSinceLabel(isoDate: string): string {
-  const d = new Date(isoDate + "T00:00:00");
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase();
+function memberSinceLabel(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase();
 }
 
 function SignInGate() {
@@ -91,18 +89,19 @@ function SignInGate() {
 }
 
 export default function DashboardView() {
-  const { user, member, authLoading, bookings, cancel, flash, signOut, annual } = useAppState();
+  const { authenticated, member, authLoading, bookings, cancel, flash, signOut, annual } =
+    useAppState();
 
   if (authLoading) {
     return <section className={styles.section} />;
   }
 
-  if (!user) {
+  if (!authenticated) {
     return <SignInGate />;
   }
 
-  const firstName = (member?.first_name || "Athlete").toUpperCase();
-  const plan = member?.plan_id ? planByName(member.plan_id) : null;
+  const firstName = (member?.firstName || "Athlete").toUpperCase();
+  const plan = member?.planId ? planByName(member.planId) : null;
   const cycle = member?.cycle ?? (annual ? "annual" : "monthly");
 
   const dashStats = [
@@ -122,7 +121,7 @@ export default function DashboardView() {
       <div className={styles.head}>
         <div>
           <p className={styles.eyebrow}>
-            {member ? `MEMBER SINCE ${memberSinceLabel(member.member_since)}` : "MEMBER"}
+            {member ? `MEMBER SINCE ${memberSinceLabel(member.memberSince)}` : "MEMBER"}
           </p>
           <h1 className={styles.h1}>HELLO, {firstName}.</h1>
         </div>
@@ -162,7 +161,7 @@ export default function DashboardView() {
                     </span>
                   </div>
                   <div className={styles.bookingMeta}>
-                    {b.trainer} · {b.dur} · Studio {b.room}
+                    {trainerById(b.trainerId)?.name} · {b.dur} · Studio {b.room}
                   </div>
                   <div className={styles.bookingActions}>
                     <Link
