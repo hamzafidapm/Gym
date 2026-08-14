@@ -1,25 +1,75 @@
-# CODING AGENTS: READ THIS FIRST
+<h1 align="center">🏋️ Ironhaus</h1>
+<p align="center">A gym booking application with real-time scheduling — built with a modern full-stack setup using Supabase.</p>
 
-This is a **handoff bundle** from Claude Design (claude.ai/design).
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
+</p>
 
-A user mocked up designs in HTML/CSS/JS using an AI design tool, then exported this bundle so a coding agent can implement the designs for real.
+<!-- 📸 Add a screenshot or GIF of the booking calendar here -->
+<!-- ![Ironhaus Screenshot](./screenshot.png) -->
 
-## What you should do — IMPORTANT
+---
 
-**Read the chat transcripts first.** There are 1 chat transcript(s) in `chats/`. The transcripts show the full back-and-forth between the user and the design assistant — they tell you **what the user actually wants** and **where they landed** after iterating. Don't skip them. The final HTML files are the output, but the chat is where the intent lives.
+## 🚀 Live Demo
+🔗 [ironhaus.vercel.app](https://ironhaus.vercel.app)
 
-**Read `project/Ironhaus.dc.html` in full.** The user had this file open when they triggered the handoff, so it's almost certainly the primary design they want built. Read it top to bottom — don't skim. Then **follow its imports**: open every file it pulls in (shared components, CSS, scripts) so you understand how the pieces fit together before you start implementing.
+---
 
-**If anything is ambiguous, ask the user to confirm before you start implementing.** It's much cheaper to clarify scope up front than to build the wrong thing.
+## ✨ Features
 
-## About the design files
+- 📅 Real-time class/session booking and scheduling
+- 🔐 User authentication via Supabase Auth
+- 🏋️ Browse available gym sessions and trainers
+- 📱 Responsive design for booking on the go
 
-The design medium is **HTML/CSS/JS** — these are prototypes, not production code. Your job is to **recreate them pixel-perfectly** in whatever technology makes sense for the target codebase (React, Vue, native, whatever fits). Match the visual output; don't copy the prototype's internal structure unless it happens to fit.
+---
 
-**Don't render these files in a browser or take screenshots unless the user asks you to.** Everything you need — dimensions, colors, layout rules — is spelled out in the source. Read the HTML and CSS directly; a screenshot won't tell you anything they don't.
+## 🛠️ Tech Stack
 
-## Bundle contents
+| Layer | Technology |
+|---|---|
+| Framework | Next.js |
+| Backend & Database | Supabase (PostgreSQL + Auth) |
+| Deployment | Vercel |
 
-- `README.md` — this file
-- `chats/` — conversation transcripts (read these!)
-- `project/` — the `Ironhaus gym booking platform` project files (HTML prototypes, assets, components)
+---
+
+## 📦 Getting Started
+
+```bash
+# Clone the repo
+git clone https://github.com/hamzafidapm/ironhaus.git
+cd ironhaus
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Fill in your Supabase project URL and anon key
+
+# Start the dev server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view it.
+
+---
+
+## 🔑 Environment Variables
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+```
+
+---
+
+## 📄 License
+
+This project is for portfolio purposes.
+
+---
+
+<p align="center">Built by <a href="https://instagram.com/vibewith.hamzah">Hamza Fida</a> — Full-stack developer</p>
