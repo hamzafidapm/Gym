@@ -1,18 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
   return (
     <section className={styles.hero}>
-      <video
+      <Image
         className={styles.bgMedia}
-        src="/video/ghg.mp4"
-        poster="/img/strength.png"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
+        src="/img/strength.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
         aria-hidden="true"
       />
       <div aria-hidden="true" className={styles.glow} />
