@@ -3,6 +3,11 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+// Temporary build-time diagnostic: confirms whether Vercel is actually
+// injecting DATABASE_URL into this build step. Remove once the deploy
+// is confirmed working -- see PRISMA.md.
+console.log("[prisma.config] DATABASE_URL present:", Boolean(process.env["DATABASE_URL"]));
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
